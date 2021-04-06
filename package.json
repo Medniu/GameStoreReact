@@ -3,17 +3,10 @@
   "version": "1.1.0",
   "description": "Must-have config for Webpack 5",
   "main": "main.tsx",
-
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run lint"
     }
-  },
-  "lint-staged": {
-    "./src/*.{js,jsx,ts,tsx}": [
-      "npx prettier --write",
-      "eslint src/*.js --fix-dry-run"
-    ]
   },
   "scripts": {
     "test": "npm run lint",
