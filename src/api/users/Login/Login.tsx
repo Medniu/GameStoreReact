@@ -1,6 +1,7 @@
 import Container from "@/api/components/Container/Container";
+import { ReactElement } from "react";
 
-function Login() {
+function Login(): ReactElement {
   return (
     <div>
       <Container>

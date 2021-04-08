@@ -5,7 +5,7 @@ import ubisoftLogo from "../../assets/images/ubisoft.png";
 import valveLogo from "../../assets/images/steam.png";
 import "./Footer.css";
 
-function Footer() {
+function Footer(): ReactElement {
   return (
     <div className="footer">
       <h2>Incredible convenient</h2>

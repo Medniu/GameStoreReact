@@ -1,6 +1,7 @@
 import Container from "@/api/components/Container/Container";
+import { ReactElement } from "react";
 
-function Registration() {
+function Registration(): ReactElement {
   return (
     <div>
       <Container>

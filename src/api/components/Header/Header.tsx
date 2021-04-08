@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 
-function Header() {
+function Header(): ReactElement {
   return (
     <nav>
       <ul className="menu-ul">
