@@ -6,31 +6,35 @@ function Header(): ReactElement {
   return (
     <nav>
       <ul className="menu-ul">
-        <li>
-          <Link className="cool-link" to="/">
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link className="cool-link" to="/products">
-            Products
-          </Link>
-        </li>
-        <li>
-          <Link className="cool-link" to="/about">
-            About
-          </Link>
-        </li>
-        <li>
-          <Link className="cool-link" to="/Login">
-            Login
-          </Link>
-        </li>
-        <li>
-          <Link className="cool-link" to="/register">
-            Register
-          </Link>
-        </li>
+        <div className="menu-left">
+          <li>
+            <Link className="cool-link" to="/">
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link className="cool-link" to="/products">
+              Products
+            </Link>
+          </li>
+          <li>
+            <Link className="cool-link" to="/about">
+              About
+            </Link>
+          </li>
+        </div>
+        <div className="menu-right">
+          <li className="auth">
+            <Link className="cool-link" to="/Login">
+              Login
+            </Link>
+          </li>
+          <li className="auth">
+            <Link className="cool-link" to="/register">
+              Register
+            </Link>
+          </li>
+        </div>
       </ul>
     </nav>
   );
