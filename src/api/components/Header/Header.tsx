@@ -22,6 +22,22 @@ function Header(): ReactElement {
               About
             </Link>
           </li>
+          <li>
+            <Link className="dropdown" to="#0">
+              Categories
+            </Link>
+            <ul className="sub-menu">
+              <li>
+                <Link to="#0">Ps</Link>
+              </li>
+              <li>
+                <Link to="#0">XBox</Link>
+              </li>
+              <li>
+                <Link to="#0">PC</Link>
+              </li>
+            </ul>
+          </li>
         </div>
         <div className="menu-right">
           <li className="auth">

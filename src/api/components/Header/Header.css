@@ -7,6 +7,8 @@
   position: sticky;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .menu-right {
@@ -17,7 +19,7 @@
 .menu-ul li {
   display: inline-block;
   font-size: 20px;
-  padding: 20px;
+  padding: 25px 20px;
 }
 
 .auth {
@@ -29,8 +31,25 @@
   display: inline-block;
   text-decoration: none;
   font-weight: lighter;
-  font-size: 25px;
+  font-size: 20px;
   padding: 0 20px;
+}
+
+.sub-menu {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 73px;
+  padding: 0;
+  border-bottom: black;
+}
+
+.sub-menu:hover {
+  display: block;
+}
+
+.menu-left li {
+  position: relative;
 }
 
 .cool-link::after {
@@ -41,7 +60,13 @@
   background: black;
   transition: width 0.3s;
 }
+
 .cool-link:hover::after {
   width: 100%;
   transition: width 0.3;
+}
+
+.menu-left li:hover .sub-menu {
+  display: block;
+  background-color: aqua;
 }
