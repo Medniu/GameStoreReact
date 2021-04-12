@@ -9,7 +9,7 @@ import Alert from "./Alert/Alert";
 import "../../styles/global.css";
 
 type AlertState = {
-  active: boolean;
+  hasError: boolean;
 };
 
 type AppProps = RouteComponentProps;
@@ -17,16 +17,16 @@ type AppProps = RouteComponentProps;
 class App extends React.Component<AppProps, AlertState> {
   constructor(props: AppProps) {
     super(props);
-    this.state = { active: true };
+    this.state = { hasError: true };
   }
 
   componentDidCatch() {
-    this.setState({ active: true });
+    this.setState({ hasError: true });
   }
 
-  handleAlertState = (active: boolean) => {
-    this.setState({ active });
-    this.props.history.push("/About");
+  handleAlertState = (hasError: boolean) => {
+    this.setState({ hasError });
+    this.props.history.push("/");
   };
 
   render(): ReactElement {
@@ -40,11 +40,11 @@ class App extends React.Component<AppProps, AlertState> {
           <Route path="/Register" component={Register} />
           <Route render={() => <Redirect to={{ pathname: "/" }} />} />
         </Switch>
-        {this.state.active && (
+        {this.state.hasError && (
           <Alert
             title="Error Title"
-            active={this.state.active}
-            errorMsg="Some Error"
+            hasError={this.state.hasError}
+            errorMessage="Some Error"
             setActive={this.handleAlertState}
           />
         )}

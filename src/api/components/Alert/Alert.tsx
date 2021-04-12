@@ -1,25 +1,24 @@
 import React, { ReactElement } from "react";
 import "./Alert.css";
 
-interface ContainerProps {
+interface IContainerProps {
   title: string;
-  active: boolean;
-  errorMsg: string;
+  hasError: boolean;
+  errorMessage: string;
   setActive: (active: boolean) => void;
 }
 
-const Alert = (props: ContainerProps): ReactElement => (
-  <div className={props.active ? "alert active" : "alert"}>
-    <div className="allert-content">
-      {props.title}
-      <h1> {props.errorMsg} </h1>
-      <button
-        type="submit"
-        onClick={() => {
-          console.log("Clicked");
-          props.setActive(false);
-        }}
-      >
+const AcceptClick = (setActive: (active: boolean) => void) => {
+  console.log("Clicked");
+  setActive(false);
+};
+
+const Alert = ({ title, hasError, errorMessage, setActive }: IContainerProps): ReactElement => (
+  <div className={`alert ${hasError ? "active" : ""}`}>
+    <div className="alert-content">
+      {title}
+      <h1> {errorMessage} </h1>
+      <button type="submit" onClick={() => AcceptClick(setActive)}>
         Click Here
       </button>
     </div>
