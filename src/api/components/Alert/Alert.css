@@ -1,0 +1,22 @@
+.allert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0);
+}
+
+.allert.active {
+  transform: scale(1);
+}
+
+.allert-content {
+  width: 300px;
+  height: 200px;
+  padding: 20px;
+  border-radius: 12px;
+  align-items: center;
+  border: black;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
