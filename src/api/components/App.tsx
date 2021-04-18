@@ -17,7 +17,7 @@ type AppProps = RouteComponentProps;
 class App extends React.Component<AppProps, AlertState> {
   constructor(props: AppProps) {
     super(props);
-    this.state = { hasError: true };
+    this.state = { hasError: false };
   }
 
   componentDidCatch() {
@@ -34,7 +34,7 @@ class App extends React.Component<AppProps, AlertState> {
       <>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/products" component={Products} />
+          <Route path="/products/:category" component={Products} />
           <Route path="/About" component={About} />
           <Route path="/Login" component={Login} />
           <Route path="/Register" component={Register} />

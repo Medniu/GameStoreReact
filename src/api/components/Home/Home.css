@@ -1,0 +1,18 @@
+.category-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  padding: 0 70px;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+}
+
+.game-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

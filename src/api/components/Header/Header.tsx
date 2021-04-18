@@ -13,30 +13,25 @@ function Header(): ReactElement {
             </Link>
           </li>
           <li>
-            <Link className="cool-link" to="/products">
+            <Link className="cool-link" to="/products/all">
               Products
             </Link>
+            <ul className="sub-menu">
+              <li>
+                <Link to="/products/Ps">Ps</Link>
+              </li>
+              <li>
+                <Link to="/products/Xbox">Xbox</Link>
+              </li>
+              <li>
+                <Link to="/products/Pc">PC</Link>
+              </li>
+            </ul>
           </li>
           <li>
             <Link className="cool-link" to="/about">
               About
             </Link>
-          </li>
-          <li>
-            <Link className="dropdown" to="#0">
-              Categories
-            </Link>
-            <ul className="sub-menu">
-              <li>
-                <Link to="#0">Ps</Link>
-              </li>
-              <li>
-                <Link to="#0">XBox</Link>
-              </li>
-              <li>
-                <Link to="#0">PC</Link>
-              </li>
-            </ul>
           </li>
         </div>
         <div className="menu-right">

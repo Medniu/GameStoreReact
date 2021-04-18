@@ -1,0 +1,13 @@
+.category-box-container {
+  display: flex;
+  justify-content: center;
+  width: 200px;
+  height: 200px;
+  background-color: black;
+  border: 3px solid orangered;
+  border-radius: 30px;
+  font-size: 24px;
+  color: white;
+  align-items: center;
+  margin: 5px;
+}

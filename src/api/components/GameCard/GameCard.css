@@ -1,0 +1,22 @@
+.game-card-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+  border: 1px solid black;
+  padding: 5px;
+  margin: 5px;
+}
+.image-container {
+  height: 100px;
+  width: auto;
+}
+
+.name-container {
+  width: 100%;
+}
+
+.price {
+  width: 100%;
+}
