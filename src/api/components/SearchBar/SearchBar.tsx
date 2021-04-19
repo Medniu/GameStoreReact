@@ -10,8 +10,8 @@ interface ContainerProps {
 }
 
 function SearchBar({ searchTerm, isSearching, setSearchTerm, setIsSearching }: ContainerProps): ReactElement {
-  const inputClick = (search: string) => {
-    if (isSearching === false) {
+  const onInputClick = (search: string) => {
+    if (!isSearching) {
       setIsSearching(true);
     }
     console.log(search);
@@ -26,7 +26,7 @@ function SearchBar({ searchTerm, isSearching, setSearchTerm, setIsSearching }: C
           className="searchTerm"
           placeholder="Enter game name"
           onChange={(event) => {
-            inputClick(event.target.value);
+            onInputClick(event.target.value);
           }}
         />
         <button type="submit" className="searchButton">

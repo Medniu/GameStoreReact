@@ -26,7 +26,7 @@ function GameCard({ imageLink, name, rating, cost, category, description }: Cont
       </div>
       <div className="name-container">
         <p>{name}</p>
-        <p>Rating {rating}</p>
+        <p>Rating: {rating}</p>
       </div>
       <div className="price">
         <p> {cost} BYN</p>

@@ -27,7 +27,7 @@ function Products(): ReactElement {
   const [isSearching, setIsSearching] = useState(false);
   const debounceSearchTerm = useDebounce(searchTerm, 300);
 
-  const category = useParams<Params>();
+  const { category } = useParams<Params>();
 
   const listGames = gameCards.map((game) => (
     <GameCard
@@ -42,22 +42,13 @@ function Products(): ReactElement {
   ));
   useEffect(() => {
     axios
-      .get("/api/getGames", { params: { text: searchTerm, category: category.category.toUpperCase() } })
-      .then((response) => {
-        const gameList = response.data;
-        setGameCards(gameList);
-      });
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get("/api/getGames", { params: { text: debounceSearchTerm, category: category.category.toUpperCase() } })
+      .get("/api/getGames", { params: { text: debounceSearchTerm, category: category.toUpperCase() } })
       .then((response) => {
         const gameList = response.data;
         setIsSearching(false);
         setGameCards(gameList);
       });
-  }, [debounceSearchTerm, category.category]);
+  }, [debounceSearchTerm, category]);
 
   return (
     <div>
