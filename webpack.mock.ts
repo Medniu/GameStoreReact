@@ -10,6 +10,14 @@ type Item = {
   rating: number;
   image: string;
 };
+
+type User = {
+  photo: string;
+  name: string;
+  address: string;
+  phoneNumber: string;
+};
+
 const data: Array<Item> = [
   {
     id: 1,
@@ -79,6 +87,16 @@ const data: Array<Item> = [
 ];
 
 export default webpackMockServer.add((app, helper) => {
+  app.post("/auth/signIn", (_req, res) => {
+    const response: User = { name: "Vlad", photo: "link-to-photo", address: "Minsk", phoneNumber: "+37533553344" };
+    res.json(response);
+  });
+
+  app.put("/auth/signUp", (_req, res) => {
+    const response: User = { name: "Vlad", photo: "link-to-photo", address: "Minsk", phoneNumber: "+37533553344" };
+    res.json(response);
+  });
+
   app.get("/api/getTopProducts", (_req, res) => {
     const response = data.sort((a, b) => (a.rating < b.rating ? 1 : -1)).slice(0, 3);
     res.json(response);

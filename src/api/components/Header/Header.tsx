@@ -1,8 +1,21 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
+import Auth from "../Auth/Auth";
 
-function Header(): ReactElement {
+interface ContainerProps {
+  user: User | null;
+  setUser: (active: User | null) => void;
+}
+
+type User = {
+  photo: string;
+  name: string;
+  address: string;
+  phoneNumber: string;
+};
+
+function Header({ user, setUser }: ContainerProps): ReactElement {
   return (
     <nav>
       <ul className="menu-ul">
@@ -34,18 +47,7 @@ function Header(): ReactElement {
             </Link>
           </li>
         </div>
-        <div className="menu-right">
-          <li className="auth">
-            <Link className="cool-link" to="/Login">
-              Login
-            </Link>
-          </li>
-          <li className="auth">
-            <Link className="cool-link" to="/register">
-              Register
-            </Link>
-          </li>
-        </div>
+        <Auth user={user} setUser={setUser} />
       </ul>
     </nav>
   );

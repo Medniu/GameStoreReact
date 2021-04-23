@@ -4,6 +4,7 @@ import axios from "axios";
 import InputText from "@/elements/inputText";
 import Container from "../Container/Container";
 import Modal from "../Modal/Modal";
+import "./ProfilePage.css";
 
 type User = {
   photo: string;
@@ -17,7 +18,7 @@ interface ContainerProps {
   setUser: (active: User | null) => void;
 }
 
-function About({ user, setUser }: ContainerProps): ReactElement {
+function ProfilePage({ user, setUser }: ContainerProps): ReactElement {
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(true);
 
   const history = useHistory();
@@ -29,7 +30,7 @@ function About({ user, setUser }: ContainerProps): ReactElement {
       setUser(userProfile);
     });
     setLoginModalIsOpen(false);
-    history.push("/about");
+    history.push("/profile");
   };
 
   if (!user && loginModalIsOpen === true) {
@@ -57,10 +58,10 @@ function About({ user, setUser }: ContainerProps): ReactElement {
   return (
     <div>
       <Container user={user} setUser={setUser}>
-        <h1>Some info about site</h1>
+        <h1>Profile Page</h1>
       </Container>
     </div>
   );
 }
 
-export default About;
+export default ProfilePage;

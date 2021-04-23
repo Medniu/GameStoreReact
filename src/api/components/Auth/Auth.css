@@ -1,0 +1,46 @@
+.form-dialog {
+  width: 100%;
+  max-width: 450px;
+}
+.modal-header {
+  background: #ff5108;
+}
+.modal-body {
+  overflow-y: auto;
+}
+.modal-body h2 {
+  font-size: 24px;
+  color: black;
+}
+.modal-body .subtitle {
+  margin-top: 0;
+  margin-bottom: 36px;
+}
+
+.modal-dialog-center {
+  position: relative;
+  margin: 30px auto;
+}
+.modal-header .close {
+  margin-top: -2px;
+  outline: none;
+  opacity: 1;
+  color: #fff;
+}
+.modal-header {
+  background: #fff;
+}
+.modal-content {
+  box-shadow: none;
+  border-radius: 0;
+  border: 0;
+}
+.modal-body {
+  padding: 9px 10px;
+}
+.modal-header .close {
+  color: #151515;
+}
+.header {
+  padding-right: 17px;
+}
