@@ -1,5 +1,4 @@
 import { ReactElement, useState } from "react";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
 import InputText from "@/elements/inputText";
 import Container from "../Container/Container";
@@ -7,7 +6,7 @@ import Modal from "../Modal/Modal";
 
 type User = {
   photo: string;
-  name: string;
+  login: string;
   address: string;
   phoneNumber: string;
 };
@@ -18,48 +17,50 @@ interface ContainerProps {
 }
 
 function About({ user, setUser }: ContainerProps): ReactElement {
+  const [email, setEmail] = useState("");
+  const [formPassword, setPassword] = useState("");
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(true);
 
-  const history = useHistory();
-
   const onLoginClick = () => {
-    console.log("Clicked");
-    axios.post("/auth/signIn").then((response) => {
-      const userProfile: User = response.data;
-      setUser(userProfile);
-    });
-    setLoginModalIsOpen(false);
-    history.push("/about");
+    if (email && formPassword) {
+      axios.post("/auth/signIn", { login: email, password: formPassword }).then((response) => {
+        const userProfile: User = response.data;
+        setUser(userProfile);
+      });
+      setLoginModalIsOpen(false);
+    } else {
+      alert("Check input data and repeat");
+    }
   };
 
-  if (!user && loginModalIsOpen === true) {
-    return (
-      <Modal open={loginModalIsOpen} onClose={setLoginModalIsOpen}>
-        <div className="modal-body">
-          <h2>
-            Login and Get <span>Started</span>
-          </h2>
-          <form className="contact-form form-validate4">
-            <InputText name="email" type="email" placeholder="email" />
-            <InputText name="password" type="password" placeholder="password" />
-            <input
-              className="submit-button"
-              id="login_btn"
-              type="button"
-              value="Sign In"
-              onClick={() => onLoginClick()}
-            />
-          </form>
-        </div>
-      </Modal>
-    );
-  }
   return (
-    <div>
-      <Container user={user} setUser={setUser}>
-        <h1>Some info about site</h1>
-      </Container>
-    </div>
+    <>
+      <div>
+        <Container user={user} setUser={setUser}>
+          <h1>Some info about site</h1>
+        </Container>
+      </div>
+      {!user && (
+        <Modal open={loginModalIsOpen} onClose={setLoginModalIsOpen}>
+          <div className="modal-body">
+            <h2>
+              Login and Get <span>Started</span>
+            </h2>
+            <form className="contact-form form-validate4">
+              <InputText setInputField={setEmail} name="email" type="email" placeholder="email" />
+              <InputText setInputField={setPassword} name="password" type="password" placeholder="password" />
+              <input
+                className="submit-button"
+                id="login_btn"
+                type="button"
+                value="Sign In"
+                onClick={() => onLoginClick()}
+              />
+            </form>
+          </div>
+        </Modal>
+      )}
+    </>
   );
 }
 

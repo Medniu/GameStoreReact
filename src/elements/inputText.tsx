@@ -4,11 +4,10 @@ interface InputProps {
   type: string;
   placeholder: string;
   name: string;
+  setInputField: (active: string) => void;
 }
 
-function inputText({ name, placeholder, type }: InputProps): ReactElement {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+function inputText({ name, placeholder, type, setInputField }: InputProps): ReactElement {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
@@ -17,8 +16,7 @@ function inputText({ name, placeholder, type }: InputProps): ReactElement {
       setEmailError("invalid email, should contain at least @");
     } else {
       setEmailError("");
-      setEmail(inputEmail);
-      console.log(email);
+      setInputField(inputEmail);
     }
   };
   const onPasswordInput = (inputPassword: string) => {
@@ -33,8 +31,7 @@ function inputText({ name, placeholder, type }: InputProps): ReactElement {
       setPasswordError(passError);
     } else {
       setPasswordError("");
-      setPassword(inputPassword);
-      console.log(password);
+      setInputField(inputPassword);
     }
   };
 
@@ -65,13 +62,4 @@ function inputText({ name, placeholder, type }: InputProps): ReactElement {
     </div>
   );
 }
-// if (type) {
-//   return (<div className="form-group">
-//     <input type={type} name={name} className="form-control" placeholder={placeholder} />
-//   </div>
-//   )
-// <div className="form-group">
-//   <input type={type} name={name} className="form-control" placeholder={placeholder} />
-// </div>
-
 export default inputText;

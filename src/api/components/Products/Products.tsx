@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Spinner } from "react-spinners-css";
 import axios from "axios";
 import InputText from "@/elements/inputText";
@@ -25,7 +25,7 @@ type Item = {
 
 type User = {
   photo: string;
-  name: string;
+  login: string;
   address: string;
   phoneNumber: string;
 };
@@ -36,11 +36,13 @@ interface ContainerProps {
 }
 
 function Products({ user, setUser }: ContainerProps): ReactElement {
+  const [email, setEmail] = useState("");
+  const [formPassword, setPassword] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [gameCards, setGameCards] = useState<Item[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const debounceSearchTerm = useDebounce(searchTerm, 300);
-
+  const [loginModalIsOpen, setLoginModalIsOpen] = useState(true);
   const { category } = useParams<Params>();
 
   const listGames = gameCards.map((game) => (
@@ -64,56 +66,54 @@ function Products({ user, setUser }: ContainerProps): ReactElement {
       });
   }, [debounceSearchTerm, category]);
 
-  const [loginModalIsOpen, setLoginModalIsOpen] = useState(true);
-
-  const history = useHistory();
-
   const onLoginClick = () => {
-    console.log("Clicked");
-    axios.post("/auth/signIn").then((response) => {
-      const userProfile: User = response.data;
-      setUser(userProfile);
-    });
-    setLoginModalIsOpen(false);
-    history.push(category);
+    if (email && formPassword) {
+      axios.post("/auth/signIn", { login: email, password: formPassword }).then((response) => {
+        const userProfile: User = response.data;
+        setUser(userProfile);
+      });
+      setLoginModalIsOpen(false);
+    } else {
+      alert("Check input data and repeat");
+    }
   };
 
-  if (!user && loginModalIsOpen === true) {
-    return (
-      <Modal open={loginModalIsOpen} onClose={setLoginModalIsOpen}>
-        <div className="modal-body">
-          <h2>
-            Login and Get <span>Started</span>
-          </h2>
-          <form className="contact-form form-validate4">
-            <InputText name="email" type="email" placeholder="email" />
-            <InputText name="password" type="password" placeholder="password" />
-            <input
-              className="submit-button"
-              id="login_btn"
-              type="button"
-              value="Sign In"
-              onClick={() => onLoginClick()}
-            />
-          </form>
-        </div>
-      </Modal>
-    );
-  }
   return (
-    <div>
-      <Container user={user} setUser={setUser}>
-        <div className="search-bar">
-          <SearchBar
-            searchTerm={searchTerm}
-            isSearching={isSearching}
-            setSearchTerm={setSearchTerm}
-            setIsSearching={setIsSearching}
-          />
-        </div>
-        <div className="game-list"> {isSearching ? <Spinner /> : listGames}</div>
-      </Container>
-    </div>
+    <>
+      <div>
+        <Container user={user} setUser={setUser}>
+          <div className="search-bar">
+            <SearchBar
+              searchTerm={searchTerm}
+              isSearching={isSearching}
+              setSearchTerm={setSearchTerm}
+              setIsSearching={setIsSearching}
+            />
+          </div>
+          <div className="game-list"> {isSearching ? <Spinner /> : listGames}</div>
+        </Container>
+      </div>
+      {!user && (
+        <Modal open={loginModalIsOpen} onClose={setLoginModalIsOpen}>
+          <div className="modal-body">
+            <h2>
+              Login and Get <span>Started</span>
+            </h2>
+            <form className="contact-form form-validate4">
+              <InputText setInputField={setEmail} name="email" type="email" placeholder="email" />
+              <InputText setInputField={setPassword} name="password" type="password" placeholder="password" />
+              <input
+                className="submit-button"
+                id="login_btn"
+                type="button"
+                value="Sign In"
+                onClick={() => onLoginClick()}
+              />
+            </form>
+          </div>
+        </Modal>
+      )}
+    </>
   );
 }
 

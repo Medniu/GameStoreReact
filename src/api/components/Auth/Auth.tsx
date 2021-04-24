@@ -12,33 +12,40 @@ interface ContainerProps {
 
 type User = {
   photo: string;
-  name: string;
+  login: string;
   address: string;
   phoneNumber: string;
 };
 
 function Auth({ user, setUser }: ContainerProps): ReactElement {
+  const [email, setEmail] = useState("");
+  const [formPassword, setPassword] = useState("");
+  const [repeatedPassword, setRepeatedPassword] = useState("");
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const [registerModalIsOpen, setRegisterModalIsOpen] = useState(false);
   const history = useHistory();
 
   const onLoginClick = () => {
-    console.log("Clicked");
-    axios.post("/auth/signIn").then((response) => {
-      const userProfile: User = response.data;
-      setUser(userProfile);
-    });
-    setLoginModalIsOpen(false);
+    if (email && formPassword) {
+      axios.post("/auth/signIn", { login: email, password: formPassword }).then((response) => {
+        const userProfile: User = response.data;
+        setUser(userProfile);
+      });
+      setLoginModalIsOpen(false);
+    } else {
+      alert("Check input data and repeat");
+    }
   };
 
   const onRegisterClick = () => {
-    console.log("Clicked");
-    axios.put("/auth/signUp").then((response) => {
-      const userProfile: User = response.data;
-      setUser(userProfile);
-    });
-    setRegisterModalIsOpen(false);
-    history.push("/profile");
+    if (email && formPassword && formPassword === repeatedPassword) {
+      axios.put("/auth/signUp", { login: email, password: formPassword }).then((response) => {
+        const userProfile: User = response.data;
+        setUser(userProfile);
+      });
+      setRegisterModalIsOpen(false);
+      history.push("/profile");
+    }
   };
 
   const signOut = () => {
@@ -67,8 +74,8 @@ function Auth({ user, setUser }: ContainerProps): ReactElement {
             Login and Get <span>Started</span>
           </h2>
           <form className="contact-form form-validate4">
-            <InputText name="email" type="email" placeholder="email" />
-            <InputText name="password" type="password" placeholder="password" />
+            <InputText setInputField={setEmail} name="email" type="email" placeholder="email" />
+            <InputText setInputField={setPassword} name="password" type="password" placeholder="password" />
             <input
               className="submit-button"
               id="login_btn"
@@ -86,9 +93,9 @@ function Auth({ user, setUser }: ContainerProps): ReactElement {
             Get Started Absolutely<span> Free!</span>
           </h2>
           <form className="contact-form">
-            <InputText name="email" type="email" placeholder="email" />
-            <InputText name="password" type="password" placeholder="password" />
-            <InputText name="password" type="password" placeholder="password" />
+            <InputText setInputField={setEmail} name="email" type="email" placeholder="email" />
+            <InputText setInputField={setPassword} name="password" type="password" placeholder="password" />
+            <InputText setInputField={setRepeatedPassword} name="password" type="password" placeholder="password" />
             <button className="submit-button" type="button" onClick={() => onRegisterClick()}>
               Register
             </button>
@@ -100,7 +107,7 @@ function Auth({ user, setUser }: ContainerProps): ReactElement {
     <div className="menu-right">
       <li className="auth">
         <Link className="profile-link" to="/profile">
-          {user.name}
+          {user.login}
         </Link>
       </li>
       <li className="auth">

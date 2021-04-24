@@ -17,7 +17,7 @@ interface TopGames {
 }
 type User = {
   photo: string;
-  name: string;
+  login: string;
   address: string;
   phoneNumber: string;
 };
