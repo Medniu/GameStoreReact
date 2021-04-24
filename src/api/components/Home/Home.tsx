@@ -15,19 +15,7 @@ interface TopGames {
   category: string;
   rating: number;
 }
-type User = {
-  photo: string;
-  login: string;
-  address: string;
-  phoneNumber: string;
-};
-
-interface ContainerProps {
-  user: User | null;
-  setUser: (active: User | null) => void;
-}
-
-function Home({ user, setUser }: ContainerProps): ReactElement {
+function Home(): ReactElement {
   const [topGames, setTopGames] = useState<TopGames[]>([]);
 
   const top3Games = topGames.map((game) => (
@@ -50,7 +38,7 @@ function Home({ user, setUser }: ContainerProps): ReactElement {
 
   return (
     <div>
-      <Container user={user} setUser={setUser}>
+      <Container>
         <div className="category-list">
           <CategoryBox link="/products/Ps" categoryName="PS" />
           <CategoryBox link="/products/Xbox" categoryName="Xbox" />

@@ -1,9 +1,10 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useState, useContext } from "react";
 import axios from "axios";
 import InputText from "@/elements/inputText";
 import Container from "../Container/Container";
 import Modal from "../Modal/Modal";
 import "./ProfilePage.css";
+import UserContext from "../context";
 
 type User = {
   photo: string;
@@ -12,16 +13,11 @@ type User = {
   phoneNumber: string;
 };
 
-interface ContainerProps {
-  user: User | null;
-  setUser: (active: User | null) => void;
-}
-
-function ProfilePage({ user, setUser }: ContainerProps): ReactElement {
+function ProfilePage(): ReactElement {
   const [email, setEmail] = useState("");
   const [formPassword, setPassword] = useState("");
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(true);
-
+  const { user, setUser } = useContext(UserContext);
   const onLoginClick = () => {
     if (email && formPassword) {
       axios.post("/auth/signIn", { login: email, password: formPassword }).then((response) => {
@@ -38,7 +34,7 @@ function ProfilePage({ user, setUser }: ContainerProps): ReactElement {
     <>
       {user && (
         <div>
-          <Container user={user} setUser={setUser}>
+          <Container>
             <h1>Profile Page</h1>
           </Container>
         </div>

@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Spinner } from "react-spinners-css";
 import axios from "axios";
@@ -8,6 +8,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import GameCard from "../GameCard/GameCard";
 import Modal from "../Modal/Modal";
 import useDebounce from "./useDebounce";
+import UserContext from "../context";
 
 interface Params {
   category: string;
@@ -30,12 +31,7 @@ type User = {
   phoneNumber: string;
 };
 
-interface ContainerProps {
-  user: User | null;
-  setUser: (active: User | null) => void;
-}
-
-function Products({ user, setUser }: ContainerProps): ReactElement {
+function Products(): ReactElement {
   const [email, setEmail] = useState("");
   const [formPassword, setPassword] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -44,6 +40,7 @@ function Products({ user, setUser }: ContainerProps): ReactElement {
   const debounceSearchTerm = useDebounce(searchTerm, 300);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(true);
   const { category } = useParams<Params>();
+  const { user, setUser } = useContext(UserContext);
 
   const listGames = gameCards.map((game) => (
     <GameCard
@@ -81,7 +78,7 @@ function Products({ user, setUser }: ContainerProps): ReactElement {
   return (
     <>
       <div>
-        <Container user={user} setUser={setUser}>
+        <Container>
           <div className="search-bar">
             <SearchBar
               searchTerm={searchTerm}

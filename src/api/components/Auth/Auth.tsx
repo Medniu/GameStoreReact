@@ -1,14 +1,10 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import InputText from "@/elements/inputText";
 import Modal from "../Modal/Modal";
 import "./Auth.css";
-
-interface ContainerProps {
-  user: User | null;
-  setUser: (active: User | null) => void;
-}
+import UserContext from "../context";
 
 type User = {
   photo: string;
@@ -17,13 +13,14 @@ type User = {
   phoneNumber: string;
 };
 
-function Auth({ user, setUser }: ContainerProps): ReactElement {
+function Auth(): ReactElement {
   const [email, setEmail] = useState("");
   const [formPassword, setPassword] = useState("");
   const [repeatedPassword, setRepeatedPassword] = useState("");
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const [registerModalIsOpen, setRegisterModalIsOpen] = useState(false);
   const history = useHistory();
+  const { user, setUser } = useContext(UserContext);
 
   const onLoginClick = () => {
     if (email && formPassword) {

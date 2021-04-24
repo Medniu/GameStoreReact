@@ -4,21 +4,12 @@ import Header from "../Header/Header";
 
 interface ContainerProps {
   children: ReactNode;
-  user: User | null;
-  setUser: (active: User | null) => void;
 }
 
-type User = {
-  photo: string;
-  login: string;
-  address: string;
-  phoneNumber: string;
-};
-
-function Container({ children, user, setUser }: ContainerProps): ReactElement {
+function Container({ children }: ContainerProps): ReactElement {
   return (
     <div>
-      <Header user={user} setUser={setUser} />
+      <Header />
       {children}
       <Footer />
     </div>

@@ -9,14 +9,6 @@ import ProfilePage from "./ProfilePage/ProfilePage";
 
 type State = {
   hasError: boolean;
-  user: User | null;
-};
-
-type User = {
-  photo: string;
-  name: string;
-  address: string;
-  phoneNumber: string;
 };
 
 type AppProps = RouteComponentProps;
@@ -24,16 +16,12 @@ type AppProps = RouteComponentProps;
 class App extends React.Component<AppProps, State> {
   constructor(props: AppProps) {
     super(props);
-    this.state = { hasError: false, user: null };
+    this.state = { hasError: false };
   }
 
   componentDidCatch() {
     this.setState({ hasError: true });
   }
-
-  handleUserState = (user: User | null) => {
-    this.setState({ user });
-  };
 
   handleAlertState = (hasError: boolean) => {
     this.setState({ hasError });
@@ -44,16 +32,10 @@ class App extends React.Component<AppProps, State> {
     return (
       <>
         <Switch>
-          <Route exact path="/" component={() => <Home user={this.state.user} setUser={this.handleUserState} />} />
-          <Route
-            path="/products/:category"
-            component={() => <Products user={this.state.user} setUser={this.handleUserState} />}
-          />
-          <Route path="/About" component={() => <About user={this.state.user} setUser={this.handleUserState} />} />
-          <Route
-            path="/Profile"
-            component={() => <ProfilePage user={this.state.user} setUser={this.handleUserState} />}
-          />
+          <Route exact path="/" component={() => <Home />} />
+          <Route path="/products/:category" component={() => <Products />} />
+          <Route path="/About" component={() => <About />} />
+          <Route path="/Profile" component={() => <ProfilePage />} />
           <Route render={() => <Redirect to={{ pathname: "/" }} />} />
         </Switch>
         {this.state.hasError && (

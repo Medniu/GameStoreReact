@@ -1,8 +1,9 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useState, useContext } from "react";
 import axios from "axios";
 import InputText from "@/elements/inputText";
 import Container from "../Container/Container";
 import Modal from "../Modal/Modal";
+import UserContext from "../context";
 
 type User = {
   photo: string;
@@ -11,15 +12,11 @@ type User = {
   phoneNumber: string;
 };
 
-interface ContainerProps {
-  user: User | null;
-  setUser: (active: User | null) => void;
-}
-
-function About({ user, setUser }: ContainerProps): ReactElement {
+function About(): ReactElement {
   const [email, setEmail] = useState("");
   const [formPassword, setPassword] = useState("");
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(true);
+  const { user, setUser } = useContext(UserContext);
 
   const onLoginClick = () => {
     if (email && formPassword) {
@@ -36,7 +33,7 @@ function About({ user, setUser }: ContainerProps): ReactElement {
   return (
     <>
       <div>
-        <Container user={user} setUser={setUser}>
+        <Container>
           <h1>Some info about site</h1>
         </Container>
       </div>

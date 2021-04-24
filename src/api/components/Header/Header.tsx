@@ -1,21 +1,9 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import Auth from "../Auth/Auth";
 
-interface ContainerProps {
-  user: User | null;
-  setUser: (active: User | null) => void;
-}
-
-type User = {
-  photo: string;
-  login: string;
-  address: string;
-  phoneNumber: string;
-};
-
-function Header({ user, setUser }: ContainerProps): ReactElement {
+function Header(): ReactElement {
   return (
     <nav>
       <ul className="menu-ul">
@@ -47,7 +35,7 @@ function Header({ user, setUser }: ContainerProps): ReactElement {
             </Link>
           </li>
         </div>
-        <Auth user={user} setUser={setUser} />
+        <Auth />
       </ul>
     </nav>
   );
