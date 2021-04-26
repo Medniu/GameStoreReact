@@ -42,7 +42,7 @@ function Auth(): ReactElement {
   };
 
   const signOut = () => {
-    dispatch({ type: "SIGN_OUT", payload: null });
+    dispatch({ type: "SIGN_OUT" });
     history.push("/");
   };
 

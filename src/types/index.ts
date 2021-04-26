@@ -30,7 +30,7 @@ type User = {
 };
 
 type AuthState = {
-  user: User | null;
+  user: User | null | undefined;
 };
 
 type AllState = {
@@ -39,7 +39,7 @@ type AllState = {
 
 type Action = {
   type: string;
-  payload: User | null;
+  payload: User | null | undefined;
 };
 
 export { User, AuthState, AllState, TopGames, Params, Item, Action };
