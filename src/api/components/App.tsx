@@ -6,6 +6,7 @@ import About from "./About/About";
 import Alert from "./Alert/Alert";
 import "../../styles/global.css";
 import ProfilePage from "./ProfilePage/ProfilePage";
+import PrivateRoute from "./Route/PrivateRoute";
 
 type State = {
   hasError: boolean;
@@ -33,9 +34,9 @@ class App extends React.Component<AppProps, State> {
       <>
         <Switch>
           <Route exact path="/" component={() => <Home />} />
-          <Route path="/products/:category" component={() => <Products />} />
-          <Route path="/About" component={() => <About />} />
-          <Route path="/Profile" component={() => <ProfilePage />} />
+          <PrivateRoute path="/products/:category" pageComponent={Products} />
+          <PrivateRoute path="/About" pageComponent={About} />
+          <PrivateRoute path="/profile" pageComponent={ProfilePage} />
           <Route render={() => <Redirect to={{ pathname: "/" }} />} />
         </Switch>
         {this.state.hasError && (

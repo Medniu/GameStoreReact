@@ -1,20 +1,11 @@
 import { ReactElement, useState, useEffect } from "react";
 import axios from "axios";
+import { TopGames } from "@/types";
 import CategoryBox from "../CategoryBox/CategoryBox";
 import Container from "../Container/Container";
 import GameCard from "../GameCard/GameCard";
-
 import "./Home.css";
 
-interface TopGames {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  description: string;
-  category: string;
-  rating: number;
-}
 function Home(): ReactElement {
   const [topGames, setTopGames] = useState<TopGames[]>([]);
 

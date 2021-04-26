@@ -1,17 +1,11 @@
-import React, { ReactElement, useState, useContext } from "react";
+import React, { ReactElement, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import InputText from "@/elements/inputText";
+import { useDispatch, useSelector } from "react-redux";
+import { User, AllState } from "@/types";
 import Modal from "../Modal/Modal";
 import "./Auth.css";
-import UserContext from "../context";
-
-type User = {
-  photo: string;
-  login: string;
-  address: string;
-  phoneNumber: string;
-};
 
 function Auth(): ReactElement {
   const [email, setEmail] = useState("");
@@ -20,13 +14,15 @@ function Auth(): ReactElement {
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const [registerModalIsOpen, setRegisterModalIsOpen] = useState(false);
   const history = useHistory();
-  const { user, setUser } = useContext(UserContext);
+
+  const dispatch = useDispatch();
+  const user = useSelector((state: AllState) => state.auth.user);
 
   const onLoginClick = () => {
     if (email && formPassword) {
-      axios.post("/auth/signIn", { login: email, password: formPassword }).then((response) => {
-        const userProfile: User = response.data;
-        setUser(userProfile);
+      axios.post("/auth/signIn", { login: email, password: formPassword }).then(({ data }) => {
+        const userProfile: User = data;
+        dispatch({ type: "SIGN_IN", payload: userProfile });
       });
       setLoginModalIsOpen(false);
     } else {
@@ -38,7 +34,7 @@ function Auth(): ReactElement {
     if (email && formPassword && formPassword === repeatedPassword) {
       axios.put("/auth/signUp", { login: email, password: formPassword }).then((response) => {
         const userProfile: User = response.data;
-        setUser(userProfile);
+        dispatch({ type: "SIGN_IN", payload: userProfile });
       });
       setRegisterModalIsOpen(false);
       history.push("/profile");
@@ -46,7 +42,7 @@ function Auth(): ReactElement {
   };
 
   const signOut = () => {
-    setUser(null);
+    dispatch({ type: "SIGN_OUT", payload: null });
     history.push("/");
   };
 

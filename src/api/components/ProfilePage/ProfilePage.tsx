@@ -1,65 +1,25 @@
-import { ReactElement, useState, useContext } from "react";
-import axios from "axios";
-import InputText from "@/elements/inputText";
+import { ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { AllState } from "@/types";
 import Container from "../Container/Container";
-import Modal from "../Modal/Modal";
 import "./ProfilePage.css";
-import UserContext from "../context";
-
-type User = {
-  photo: string;
-  login: string;
-  address: string;
-  phoneNumber: string;
-};
 
 function ProfilePage(): ReactElement {
-  const [email, setEmail] = useState("");
-  const [formPassword, setPassword] = useState("");
-  const [loginModalIsOpen, setLoginModalIsOpen] = useState(true);
-  const { user, setUser } = useContext(UserContext);
-  const onLoginClick = () => {
-    if (email && formPassword) {
-      axios.post("/auth/signIn", { login: email, password: formPassword }).then((response) => {
-        const userProfile: User = response.data;
-        setUser(userProfile);
-      });
-      setLoginModalIsOpen(false);
-    } else {
-      alert("Check input data and repeat");
-    }
-  };
+  const user = useSelector((state: AllState) => state.auth.user);
 
-  return (
-    <>
-      {user && (
-        <div>
-          <Container>
-            <h1>Profile Page</h1>
-          </Container>
-        </div>
-      )}
-      {!user && (
-        <Modal open={loginModalIsOpen} onClose={setLoginModalIsOpen}>
-          <div className="modal-body">
-            <h2>
-              Login and Get <span>Started</span>
-            </h2>
-            <form className="contact-form form-validate4">
-              <InputText setInputField={setEmail} name="email" type="email" placeholder="email" />
-              <InputText setInputField={setPassword} name="password" type="password" placeholder="password" />
-              <input
-                className="submit-button"
-                id="login_btn"
-                type="button"
-                value="Sign In"
-                onClick={() => onLoginClick()}
-              />
-            </form>
-          </div>
-        </Modal>
-      )}
-    </>
+  return !user ? (
+    <div>
+      <Container>
+        <h1>Profile Page</h1>
+      </Container>
+    </div>
+  ) : (
+    <Container>
+      <div>{user.login}</div>
+      <div>{user.address}</div>
+      <div>{user.phoneNumber}</div>
+      <div>{user.photo}</div>
+    </Container>
   );
 }
 

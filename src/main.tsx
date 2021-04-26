@@ -1,23 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactDom from "react-dom";
+import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import { createStore, applyMiddleware, compose } from "redux";
+import reduxThunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
+import reducers from "./redux/reducers";
 import App from "./api/components/App";
-import UserContext from "./api/components/context";
 
-type User = {
-  photo: string;
-  login: string;
-  address: string;
-  phoneNumber: string;
-};
+const store = createStore(reducers, compose(applyMiddleware(reduxThunk), composeWithDevTools()));
 
 function Main() {
-  const [user, setUser] = useState<User | null>(null);
   return (
     <BrowserRouter>
-      <UserContext.Provider value={{ user, setUser }}>
+      <Provider store={store}>
         <App />
-      </UserContext.Provider>
+      </Provider>
     </BrowserRouter>
   );
 }
