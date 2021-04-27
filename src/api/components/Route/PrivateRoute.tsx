@@ -37,9 +37,20 @@ const PrivateRoute = ({ pageComponent, path }: Props): ReactElement => {
             <h2>
               Login and Get <span>Started</span>
             </h2>
-            <form className="contact-form form-validate4">
-              <InputText setInputField={setEmail} name="email" type="email" placeholder="email" />
-              <InputText setInputField={setPassword} name="password" type="password" placeholder="password" />
+            <form className="contact-form">
+              <div className="input-container">
+                Email:
+                <InputText value={email} setInputField={setEmail} name="email" type="email" placeholder="email" />
+              </div>
+              <div className="input-container">
+                <InputText
+                  value={formPassword}
+                  setInputField={setPassword}
+                  name="password"
+                  type="password"
+                  placeholder="password"
+                />
+              </div>
               <input
                 className="submit-button"
                 id="login_btn"

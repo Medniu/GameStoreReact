@@ -4,16 +4,7 @@ import webpackMockServer from "webpack-mock-server";
 import express from "express";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import bodyParser from "body-parser";
-
-type Item = {
-  id: number;
-  name: string;
-  price: number;
-  description: string;
-  category: string;
-  rating: number;
-  image: string;
-};
+import { Item } from "@/types";
 
 type User = {
   photo: string;
@@ -128,6 +119,29 @@ export default webpackMockServer.add((app, helper) => {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(express.json());
 
+  app.post("/api/saveProfile", (_req, res) => {
+    const { login, address, phoneNumber } = _req.body;
+    const loginUser = userList.find((item: User) => item.login === login);
+    if (loginUser) {
+      loginUser.address = address;
+      loginUser.phoneNumber = phoneNumber;
+      res.json(loginUser);
+    } else {
+      res.status(400).json("Unvalid login or password");
+    }
+  });
+
+  app.post("/api/changePassword", (_req, res) => {
+    const { login, newPassword, oldPassword } = _req.body;
+    const loginUser = userList.find((item: User) => item.login === login);
+    if (loginUser && loginUser.password === oldPassword) {
+      loginUser.password = newPassword;
+      res.json(true);
+    } else {
+      res.status(400).json(false);
+    }
+  });
+
   app.post("/auth/signIn", (_req, res) => {
     const { login, password } = _req.body;
     const loginUser = userList.find((item: User) => item.login === login);
@@ -143,7 +157,6 @@ export default webpackMockServer.add((app, helper) => {
     const loginUser = userList.find((item: User) => item.login === login);
     if (!loginUser) {
       userList.push({ login, password, photo: "", address: "", phoneNumber: "" });
-      console.log(userList);
       res.json({ login, password, photo: "", address: "", phoneNumber: "" });
     } else {
       res.status(401).json("User already exists");
@@ -156,13 +169,9 @@ export default webpackMockServer.add((app, helper) => {
   });
 
   app.get(`/api/getGames`, (_req, res) => {
-    console.log(_req);
     let response;
     if (_req.query && typeof _req.query.text === "string" && typeof _req.query.category === "string") {
       const { text, category } = _req.query;
-
-      console.log(text);
-      console.log(category);
       if ((!text && !category) || category === "ALL") {
         response = data.filter((item: Item) => item.name.toUpperCase().includes(text.toUpperCase()));
       } else {

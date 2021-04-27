@@ -50,12 +50,12 @@ function Auth(): ReactElement {
     <>
       <div className="menu-right">
         <li className="auth">
-          <button type="button" onClick={() => setLoginModalIsOpen(true)}>
+          <button className="auth-button" type="button" onClick={() => setLoginModalIsOpen(true)}>
             Login
           </button>
         </li>
         <li className="auth">
-          <button type="button" onClick={() => setRegisterModalIsOpen(true)}>
+          <button className="auth-button" type="button" onClick={() => setRegisterModalIsOpen(true)}>
             Register
           </button>
         </li>
@@ -67,8 +67,14 @@ function Auth(): ReactElement {
             Login and Get <span>Started</span>
           </h2>
           <form className="contact-form form-validate4">
-            <InputText setInputField={setEmail} name="email" type="email" placeholder="email" />
-            <InputText setInputField={setPassword} name="password" type="password" placeholder="password" />
+            <div className="input-container">
+              Email:
+              <InputText value="" setInputField={setEmail} name="email" type="email" placeholder="email" />
+            </div>
+            <div className="input-container">
+              Password:
+              <InputText value="" setInputField={setPassword} name="password" type="password" placeholder="password" />
+            </div>
             <input
               className="submit-button"
               id="login_btn"
@@ -86,9 +92,24 @@ function Auth(): ReactElement {
             Get Started Absolutely<span> Free!</span>
           </h2>
           <form className="contact-form">
-            <InputText setInputField={setEmail} name="email" type="email" placeholder="email" />
-            <InputText setInputField={setPassword} name="password" type="password" placeholder="password" />
-            <InputText setInputField={setRepeatedPassword} name="password" type="password" placeholder="password" />
+            <div className="input-container">
+              Email:
+              <InputText value="" setInputField={setEmail} name="email" type="email" placeholder="email" />
+            </div>
+            <div className="input-container">
+              Password:
+              <InputText value="" setInputField={setPassword} name="password" type="password" placeholder="password" />
+            </div>
+            <div className="input-container">
+              Confirm Password:
+              <InputText
+                value=""
+                setInputField={setRepeatedPassword}
+                name="password"
+                type="password"
+                placeholder="password"
+              />
+            </div>
             <button className="submit-button" type="button" onClick={() => onRegisterClick()}>
               Register
             </button>
@@ -104,7 +125,7 @@ function Auth(): ReactElement {
         </Link>
       </li>
       <li className="auth">
-        <button type="button" onClick={() => signOut()}>
+        <button className="auth-button" type="button" onClick={() => signOut()}>
           Sign out
         </button>
       </li>

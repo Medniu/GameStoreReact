@@ -10,6 +10,8 @@ export default (state = INITIAL_STATE, action: Action): AuthState => {
       return { ...state, user: action.payload };
     case "SIGN_OUT":
       return { ...state, user: null };
+    case "UPDATE_USER":
+      return { ...state, user: action.payload };
     default:
       return state;
   }

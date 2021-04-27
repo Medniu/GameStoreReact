@@ -11,6 +11,7 @@
 .modal-body h2 {
   font-size: 24px;
   color: black;
+  margin: 0px;
 }
 .modal-body .subtitle {
   margin-top: 0;
@@ -43,4 +44,16 @@
 }
 .header {
   padding-right: 17px;
+}
+.auth-button {
+  background-color: aqua;
+  height: 25px;
+  width: 100px;
+  border-radius: 10px;
+  border-color: black;
+  color: black;
+}
+
+.auth-button:hover {
+  background-color: white;
 }

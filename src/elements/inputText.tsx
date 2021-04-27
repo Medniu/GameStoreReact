@@ -1,15 +1,17 @@
 import React, { ReactElement, useState } from "react";
 
 interface InputProps {
+  value: string;
   type: string;
   placeholder: string;
   name: string;
   setInputField: (active: string) => void;
 }
 
-function inputText({ name, placeholder, type, setInputField }: InputProps): ReactElement {
+function inputText({ value, name, placeholder, type, setInputField }: InputProps): ReactElement {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [userInfoError, setUserInfoError] = useState("");
 
   const onEmailInput = (inputEmail: string) => {
     if (!inputEmail.includes("@")) {
@@ -34,6 +36,19 @@ function inputText({ name, placeholder, type, setInputField }: InputProps): Reac
       setInputField(inputPassword);
     }
   };
+  const onUserInfoInput = (inputInfo: string) => {
+    let userError = "";
+    if (!inputInfo) {
+      userError = "Contacts cant be empty";
+    }
+    if (userError) {
+      setUserInfoError(userError);
+      setInputField("");
+    } else {
+      setUserInfoError("");
+      setInputField(inputInfo);
+    }
+  };
 
   if (type === "email") {
     return (
@@ -49,16 +64,30 @@ function inputText({ name, placeholder, type, setInputField }: InputProps): Reac
       </div>
     );
   }
+  if (type === "password")
+    return (
+      <div className="form-group">
+        <input
+          type={type}
+          name={name}
+          className="form-control"
+          placeholder={placeholder}
+          onChange={(event) => onPasswordInput(event.target.value)}
+        />
+        <div style={{ fontSize: 12, color: "red" }}>{passwordError}</div>
+      </div>
+    );
   return (
     <div className="form-group">
       <input
+        value={value}
         type={type}
         name={name}
         className="form-control"
         placeholder={placeholder}
-        onChange={(event) => onPasswordInput(event.target.value)}
+        onChange={(event) => onUserInfoInput(event.target.value)}
       />
-      <div style={{ fontSize: 12, color: "red" }}>{passwordError}</div>
+      <div style={{ fontSize: 12, color: "red" }}>{userInfoError}</div>
     </div>
   );
 }

@@ -5,6 +5,11 @@ const signIn = (user: User) => ({
   payload: user,
 });
 
+const updateUser = (user: User) => ({
+  type: "UPDATE_USER",
+  payload: user,
+});
+
 const signOut = () => ({
   type: "SIGN_OUT",
   payload: null,
@@ -13,4 +18,5 @@ const signOut = () => ({
 export default {
   signIn,
   signOut,
+  updateUser,
 };
