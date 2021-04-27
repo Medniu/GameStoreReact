@@ -32,17 +32,34 @@ function Auth(): ReactElement {
 
   const onRegisterClick = () => {
     if (email && formPassword && formPassword === repeatedPassword) {
-      axios.put("/auth/signUp", { login: email, password: formPassword }).then((response) => {
-        const userProfile: User = response.data;
-        dispatch({ type: "SIGN_IN", payload: userProfile });
-      });
-      setRegisterModalIsOpen(false);
-      history.push("/profile");
+      axios
+        .put("/auth/signUp", { login: email, password: formPassword })
+        .then((response) => {
+          const userProfile: User | null = response.data;
+          if (userProfile) {
+            dispatch({ type: "SIGN_IN", payload: userProfile });
+            setRegisterModalIsOpen(false);
+            history.push("/profile");
+          }
+        })
+        .catch((err) => {
+          setRegisterModalIsOpen(true);
+          alert("User with this login already exists");
+        });
     }
   };
 
   const signOut = () => {
     dispatch({ type: "SIGN_OUT" });
+    history.push("/");
+  };
+  const closeLoginModal = () => {
+    setLoginModalIsOpen(false);
+    history.push("/");
+  };
+
+  const closeRegisterModal = () => {
+    setRegisterModalIsOpen(false);
     history.push("/");
   };
 
@@ -61,7 +78,7 @@ function Auth(): ReactElement {
         </li>
       </div>
 
-      <Modal open={loginModalIsOpen} onClose={setLoginModalIsOpen}>
+      <Modal open={loginModalIsOpen} onClose={closeLoginModal}>
         <div className="modal-body">
           <h2>
             Login and Get <span>Started</span>
@@ -86,7 +103,7 @@ function Auth(): ReactElement {
         </div>
       </Modal>
 
-      <Modal open={registerModalIsOpen} onClose={setRegisterModalIsOpen}>
+      <Modal open={registerModalIsOpen} onClose={closeRegisterModal}>
         <div className="modal-body">
           <h2>
             Get Started Absolutely<span> Free!</span>

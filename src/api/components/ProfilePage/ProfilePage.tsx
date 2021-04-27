@@ -11,8 +11,8 @@ import "./ProfilePage.css";
 function ProfilePage(): ReactElement {
   const dispatch = useDispatch();
   const user = useSelector((state: AllState) => state.auth.user);
-  const [address, setAddress] = useState(user!.address);
-  const [phoneNumber, setphoneNumber] = useState(user!.phoneNumber);
+  const [address, setAddress] = useState(user?.address);
+  const [phoneNumber, setphoneNumber] = useState(user?.phoneNumber);
   const [changePasswordModel, setChangePasswordModel] = useState(false);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -36,6 +36,10 @@ function ProfilePage(): ReactElement {
 
   const openChangePasswordModal = () => {
     setChangePasswordModel(true);
+  };
+
+  const closePasswordModal = () => {
+    setChangePasswordModel(false);
   };
 
   const updatePassword = () => {
@@ -72,12 +76,18 @@ function ProfilePage(): ReactElement {
             </div>
             <div className="user-info-container">
               Address:
-              <InputText value={address} type="text" placeholder="Address" name="address" setInputField={setAddress} />
+              <InputText
+                value={address || ""}
+                type="text"
+                placeholder="Address"
+                name="address"
+                setInputField={setAddress}
+              />
             </div>
             <div className="user-info-container">
               PhoneNumber:
               <InputText
-                value={phoneNumber}
+                value={phoneNumber || ""}
                 type="text"
                 placeholder="Phone Number"
                 name="phoneNumber"
@@ -89,7 +99,7 @@ function ProfilePage(): ReactElement {
                 Update contacts
               </button>
               <button type="button" onClick={() => openChangePasswordModal()}>
-                Update password
+                Change password
               </button>
               <button type="button" onClick={() => signOut()}>
                 Sign Out
@@ -98,7 +108,7 @@ function ProfilePage(): ReactElement {
           </div>
         </div>
       </Container>
-      <Modal open={changePasswordModel} onClose={setChangePasswordModel}>
+      <Modal open={changePasswordModel} onClose={closePasswordModal}>
         <div className="modal-body">
           <form className="form-container">
             <h2>Changing password</h2>

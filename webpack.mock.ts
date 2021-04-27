@@ -159,7 +159,7 @@ export default webpackMockServer.add((app, helper) => {
       userList.push({ login, password, photo: "", address: "", phoneNumber: "" });
       res.json({ login, password, photo: "", address: "", phoneNumber: "" });
     } else {
-      res.status(401).json("User already exists");
+      res.status(401).json(null);
     }
   });
 
