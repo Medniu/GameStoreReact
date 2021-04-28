@@ -12,10 +12,12 @@
 }
 
 .modal_content {
+  display: flex;
+  justify-content: center;
   padding: 20px;
   border-radius: 12px;
   background-color: white;
-  height: 250px;
+  height: 330px;
   width: 400px;
 }
 

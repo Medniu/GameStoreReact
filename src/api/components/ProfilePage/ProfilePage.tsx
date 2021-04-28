@@ -142,13 +142,11 @@ function ProfilePage(): ReactElement {
                 placeholder="Confirm new password"
               />
             </div>
-            <input
-              className="submit-button"
-              id="login_btn"
-              type="button"
-              value="Confirm"
-              onClick={() => updatePassword()}
-            />
+            <div className="button-container">
+              <button className="submit-button" type="button" onClick={() => updatePassword()}>
+                Confirm
+              </button>
+            </div>
           </form>
         </div>
       </Modal>

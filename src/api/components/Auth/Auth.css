@@ -6,7 +6,10 @@
   background: #ff5108;
 }
 .modal-body {
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
+  justify-content: center;
 }
 .modal-body h2 {
   font-size: 24px;
@@ -56,4 +59,8 @@
 
 .auth-button:hover {
   background-color: white;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
 }

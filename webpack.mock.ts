@@ -156,8 +156,15 @@ export default webpackMockServer.add((app, helper) => {
     const { login, password } = _req.body;
     const loginUser = userList.find((item: User) => item.login === login);
     if (!loginUser) {
-      userList.push({ login, password, photo: "", address: "", phoneNumber: "" });
-      res.json({ login, password, photo: "", address: "", phoneNumber: "" });
+      const newUser: User = {
+        login,
+        password,
+        photo:
+          "https://st.depositphotos.com/1779253/5140/v/600/depositphotos_51402215-stock-illustration-male-avatar-profile-picture-use.jpg",
+        address: "",
+        phoneNumber: "",
+      };
+      res.json(newUser);
     } else {
       res.status(401).json(null);
     }

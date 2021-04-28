@@ -58,13 +58,11 @@ const PrivateRoute = ({ pageComponent, path }: Props): ReactElement => {
                   placeholder="password"
                 />
               </div>
-              <input
-                className="submit-button"
-                id="login_btn"
-                type="button"
-                value="Sign In"
-                onClick={() => onLoginClick()}
-              />
+              <div className="button-container">
+                <button className="submit-button" type="button" onClick={() => onLoginClick()}>
+                  Sign in
+                </button>
+              </div>
             </form>
           </div>
         </Modal>
