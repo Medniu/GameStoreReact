@@ -20,6 +20,8 @@ type Item = {
   category: string;
   rating: number;
   image: string;
+  genre: string;
+  age: string;
 };
 
 type User = {

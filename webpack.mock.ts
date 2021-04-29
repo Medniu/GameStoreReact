@@ -23,62 +23,76 @@ const data: Array<Item> = [
     category: "PS",
     rating: 4.6,
     image: "https://upload.wikimedia.org/wikipedia/ru/b/b5/Forza_Motorsport_5_coverart.jpg",
+    genre: "Racing",
+    age: "12",
   },
   {
     id: 2,
     name: "Fifa 21",
-    price: 70,
+    price: 120,
     description: "someText",
     category: "PS",
     rating: 4.4,
     image: "https://www.belconsole.by/pics/items/fifa21_ps42dpftfront_ru.jpg",
+    genre: "Sport",
+    age: "6",
   },
   {
     id: 3,
     name: "Pes 21",
-    price: 70,
+    price: 85,
     description: "someText",
     category: "PC",
     rating: 3.5,
     image: "https://torrentigruha.net/uploads/posts/2020-09/1599991149_56fg.jpg",
+    genre: "Sport",
+    age: "6",
   },
   {
     id: 4,
     name: "Call of Duty 4",
-    price: 70,
+    price: 75,
     description: "someText",
     category: "Xbox",
     rating: 4.8,
     image:
       "https://www.callofduty.com/content/dam/atvi/callofduty/legacy/modern-warfare-remastered/Standalone_Packshots_2D_PS4.jpg",
+    genre: "Shooter",
+    age: "18",
   },
   {
     id: 5,
     name: "Battlefield",
-    price: 70,
+    price: 40,
     description: "someText",
     category: "Xbox",
     rating: 4.3,
     image: "https://image.api.playstation.com/cdn/EP0006/CUSA08670_00/l2B6pYvxHDYUjuhT0vTHcidJA2MpjWR4.png",
+    genre: "Shooter",
+    age: "18",
   },
   {
     id: 6,
     name: "Need for Speed",
-    price: 70,
+    price: 65,
     description: "someText",
     category: "PC",
     rating: 5.0,
     image: "http://squarefaction.ru/files/game/16560/cover/need-for-speed-most-wanted-5-1_435c1034.jpg",
+    genre: "Racing",
+    age: "6",
   },
   {
     id: 7,
     name: "Warcraft 3",
-    price: 70,
+    price: 30,
     description: "someText",
     category: "PC",
     rating: 5.0,
     image:
       "https://i09.kanobu.ru/c/407fda4859e10fe89a6950262b4f93d5/200x284/u.kanobu.ru/games/92/ccf81a89d0914102b1485605a814e119",
+    genre: "Strategy",
+    age: "12",
   },
 ];
 
@@ -115,6 +129,34 @@ const userList: Array<User> = [
     password: "111111",
   },
 ];
+
+const filterByAgeAndGenre = (age: string, genre: string, gameList: Array<Item>) => {
+  let response: Array<Item> = gameList;
+  if (genre.toUpperCase() !== "ALL") {
+    response = response.filter((item: Item) => item.genre.toUpperCase().includes(genre.toUpperCase()));
+  }
+  if (age.toUpperCase() !== "ALL") {
+    response = response.filter((item: Item) => Number(item.age) <= Number(age));
+  }
+  return response;
+};
+
+const sortByPriceOrRating = (criteria: string, type: string, gameList: Array<Item>) => {
+  let response: Array<Item> = gameList;
+  if (criteria.toUpperCase() === "PRICE") {
+    if (type.toUpperCase() === "DESC") {
+      response = response.sort((a, b) => (a.price < b.price ? 1 : -1));
+    } else {
+      response = response.sort((a, b) => (a.price > b.price ? 1 : -1));
+    }
+  } else if (type.toUpperCase() === "DESC") {
+    response = response.sort((a, b) => (a.rating < b.rating ? 1 : -1));
+  } else {
+    response = response.sort((a, b) => (a.rating > b.rating ? 1 : -1));
+  }
+  return response;
+};
+
 export default webpackMockServer.add((app, helper) => {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(express.json());
@@ -177,16 +219,31 @@ export default webpackMockServer.add((app, helper) => {
 
   app.get(`/api/getGames`, (_req, res) => {
     let response;
-    if (_req.query && typeof _req.query.text === "string" && typeof _req.query.category === "string") {
-      const { text, category } = _req.query;
+    if (
+      _req.query &&
+      typeof _req.query.text === "string" &&
+      typeof _req.query.category === "string" &&
+      typeof _req.query.criteria === "string" &&
+      typeof _req.query.type === "string" &&
+      typeof _req.query.genre === "string" &&
+      typeof _req.query.age === "string"
+    ) {
+      const { text, category, criteria, type, genre, age } = _req.query;
+      console.log({ text, category, criteria, type, genre, age });
+
       if ((!text && !category) || category === "ALL") {
         response = data.filter((item: Item) => item.name.toUpperCase().includes(text.toUpperCase()));
+
+        response = filterByAgeAndGenre(age, genre, response);
+        response = sortByPriceOrRating(criteria, type, response);
       } else {
         response = data.filter(
           (item: Item) =>
             item.name.toUpperCase().includes(text.toUpperCase()) &&
             item.category.toUpperCase().includes(category.toUpperCase())
         );
+        response = filterByAgeAndGenre(age, genre, response);
+        response = sortByPriceOrRating(criteria, type, response);
       }
     }
     return res.json(response);

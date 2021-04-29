@@ -14,7 +14,7 @@ function Header(): ReactElement {
             </Link>
           </li>
           <li>
-            <Link className="cool-link" to="/products/all">
+            <Link className="cool-link" to="/products/All">
               Products
             </Link>
             <ul className="sub-menu">

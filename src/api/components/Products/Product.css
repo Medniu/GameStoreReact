@@ -1,5 +1,49 @@
+.product-page-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
+
+.category-name-container {
+  display: flex;
+  justify-content: left;
+}
+.criteria-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px 0px;
+}
+h2 {
+  margin: 10px 0px;
+}
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0px 10px;
+  width: 150px;
+}
 .game-list {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: initial;
+  width: 100%;
+}
+
+.radio-button-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
 }
