@@ -8,7 +8,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import GameCard from "../GameCard/GameCard";
 import useDebounce from "./useDebounce";
 import "./Product.css";
-import DropDawn from "../DropDawn/DropDawn";
+import DropDown from "../DropDown/DropDown";
 import RadioButtonForm from "../RadioButton/RadioButtonForm";
 
 function Products(): ReactElement {
@@ -17,8 +17,8 @@ function Products(): ReactElement {
   const [isSearching, setIsSearching] = useState(false);
   const [sortCriteria, setSortCriteria] = useState("Rating");
   const [sortType, setSortType] = useState("Desc");
-  const [genreFiltr, setGenreFiltr] = useState("All");
-  const [ageFiltr, setAgeFiltr] = useState("All");
+  const [genreFilter, setGenreFilter] = useState("All");
+  const [ageFilter, setAgeFilter] = useState("All");
   const debounceSearchTerm = useDebounce(searchTerm, 300);
   const { category } = useParams<Params>();
   const listGames = gameCards.map((game) => (
@@ -40,8 +40,8 @@ function Products(): ReactElement {
           category: category.toUpperCase(),
           criteria: sortCriteria,
           type: sortType,
-          genre: genreFiltr,
-          age: ageFiltr,
+          genre: genreFilter,
+          age: ageFilter,
         },
       })
       .then((response) => {
@@ -49,23 +49,8 @@ function Products(): ReactElement {
         setIsSearching(false);
         setGameCards(gameList);
       });
-  }, [debounceSearchTerm, category, sortCriteria, sortType, genreFiltr, ageFiltr]);
+  }, [debounceSearchTerm, category, sortCriteria, sortType, genreFilter, ageFilter]);
 
-  const changeCriteria = (criteria: string) => {
-    setSortCriteria(criteria);
-  };
-
-  const changeSortType = (type: string) => {
-    setSortType(type);
-  };
-
-  const onChangeAge = (age: string) => {
-    setAgeFiltr(age);
-  };
-
-  const onChangeGenres = (genre: string) => {
-    setGenreFiltr(genre);
-  };
   return (
     <>
       <div>
@@ -78,36 +63,36 @@ function Products(): ReactElement {
               <div className="sort-container">
                 <h2>Sort</h2>
                 <div className="criteria-container">
-                  <DropDawn
-                    dropDawnName="Criteria:"
+                  <DropDown
+                    dropDownName="Criteria:"
                     currentValue={sortCriteria}
                     optionalList={["Rating", "Price"]}
-                    changeSortType={changeCriteria}
+                    changeSortType={setSortCriteria}
                   />
                 </div>
                 <div className="criteria-container">
-                  <DropDawn
-                    dropDawnName="Type:"
+                  <DropDown
+                    dropDownName="Type:"
                     currentValue={sortType}
                     optionalList={["Asc", "Desc"]}
-                    changeSortType={changeSortType}
+                    changeSortType={setSortType}
                   />
                 </div>
               </div>
               <div>
                 <RadioButtonForm
                   name="Age"
-                  currentValue={ageFiltr}
+                  currentValue={ageFilter}
                   optionalList={["All", "6", "12", "18"]}
-                  changeFilterValue={onChangeAge}
+                  changeFilterValue={setAgeFilter}
                 />
               </div>
               <div>
                 <RadioButtonForm
                   name="Genres"
-                  currentValue={genreFiltr}
+                  currentValue={genreFilter}
                   optionalList={["All", "Sport", "Shooter", "Strategy", "Racing"]}
-                  changeFilterValue={onChangeGenres}
+                  changeFilterValue={setGenreFilter}
                 />
               </div>
             </div>

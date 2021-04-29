@@ -1,16 +1,16 @@
 import React, { ReactElement } from "react";
-import "./DropDawn.css";
+import "./DropDown.css";
 
 interface ContainerProps {
-  dropDawnName: string;
+  dropDownName: string;
   currentValue: string;
   optionalList: Array<string>;
   changeSortType: (active: string) => void;
 }
 
-const DropDawn = ({ dropDawnName, currentValue, optionalList, changeSortType }: ContainerProps): ReactElement => (
+const DropDown = ({ dropDownName, currentValue, optionalList, changeSortType }: ContainerProps): ReactElement => (
   <>
-    <div>{dropDawnName}</div>
+    <div>{dropDownName}</div>
     <div>
       <select value={currentValue} onChange={(event) => changeSortType(event.target.value)}>
         {optionalList.map((value) => (
@@ -22,4 +22,4 @@ const DropDawn = ({ dropDawnName, currentValue, optionalList, changeSortType }: 
     </div>
   </>
 );
-export default DropDawn;
+export default DropDown;

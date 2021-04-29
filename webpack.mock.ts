@@ -130,6 +130,11 @@ const userList: Array<User> = [
   },
 ];
 
+const criteriaType = {
+  price: "price",
+  rating: "rating",
+};
+
 const filterByAgeAndGenre = (age: string, genre: string, gameList: Array<Item>) => {
   let response: Array<Item> = gameList;
   if (genre.toUpperCase() !== "ALL") {
@@ -143,16 +148,17 @@ const filterByAgeAndGenre = (age: string, genre: string, gameList: Array<Item>) 
 
 const sortByPriceOrRating = (criteria: string, type: string, gameList: Array<Item>) => {
   let response: Array<Item> = gameList;
-  if (criteria.toUpperCase() === "PRICE") {
-    if (type.toUpperCase() === "DESC") {
-      response = response.sort((a, b) => (a.price < b.price ? 1 : -1));
-    } else {
-      response = response.sort((a, b) => (a.price > b.price ? 1 : -1));
-    }
-  } else if (type.toUpperCase() === "DESC") {
-    response = response.sort((a, b) => (a.rating < b.rating ? 1 : -1));
+
+  if (type.toUpperCase() === "DESC") {
+    response = response.sort(
+      (a, b) =>
+        b[criteria.toLowerCase() as keyof typeof criteriaType] - a[criteria.toLowerCase() as keyof typeof criteriaType]
+    );
   } else {
-    response = response.sort((a, b) => (a.rating > b.rating ? 1 : -1));
+    response = response.sort(
+      (a, b) =>
+        a[criteria.toLowerCase() as keyof typeof criteriaType] - b[criteria.toLowerCase() as keyof typeof criteriaType]
+    );
   }
   return response;
 };
