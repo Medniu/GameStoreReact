@@ -30,37 +30,41 @@ function ShoppingCart(): ReactElement {
     <Container>
       <>
         <div className="cart-container">
-          <h2> Order List</h2>
+          <h2 className="table-header"> Order List</h2>
           <table>
-            <tr>
-              <th>Name</th>
-              <th>Platform</th>
-              <th>Amount</th>
-              <th>Price</th>
-              <th>{"  "}</th>
-            </tr>
-            {cartItems.map((item) => (
-              <tr key={item.id}>
-                <td>{item.name}</td> <td>{item.category}</td>{" "}
-                <td>
-                  <div className="quantity-container">
-                    <div className="quantity-value">{item.quantity}</div>
-                    <div className="quantity-buttons-container">
-                      <button type="button" className="quantity-button" onClick={() => IncreaseQuantity(item.id)}>
-                        +
-                      </button>
-                      <button type="button" className="quantity-button" onClick={() => DecreaseQuantity(item.id)}>
-                        -
-                      </button>
-                    </div>
-                  </div>
-                </td>{" "}
-                <td>{item.price}</td>
-                <td>
-                  <input type="checkbox" checked={item.isSelected} onChange={() => onSelectClick(item.id)} />
-                </td>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Platform</th>
+                <th>Amount</th>
+                <th>Price</th>
+                <th>{"  "}</th>
               </tr>
-            ))}
+            </thead>
+            <tbody>
+              {cartItems.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.name}</td> <td>{item.category}</td>{" "}
+                  <td>
+                    <div className="quantity-container">
+                      <div className="quantity-value">{item.quantity}</div>
+                      <div className="quantity-buttons-container">
+                        <button type="button" className="quantity-button" onClick={() => IncreaseQuantity(item.id)}>
+                          +
+                        </button>
+                        <button type="button" className="quantity-button" onClick={() => DecreaseQuantity(item.id)}>
+                          -
+                        </button>
+                      </div>
+                    </div>
+                  </td>{" "}
+                  <td>{item.price}</td>
+                  <td>
+                    <input type="checkbox" checked={item.isSelected} onChange={() => onSelectClick(item.id)} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
           <div className="order-container">
             <div className="billing-container">
@@ -68,10 +72,10 @@ function ShoppingCart(): ReactElement {
               <div>Total:{totalSum}</div>
             </div>
             <div className="button-container">
-              <button type="button" onClick={BuyItems}>
+              <button className="buy-button" type="button" onClick={BuyItems}>
                 Buy
               </button>
-              <button type="button" onClick={RemoveItems}>
+              <button className="remove-button" type="button" onClick={RemoveItems}>
                 Remove
               </button>
             </div>

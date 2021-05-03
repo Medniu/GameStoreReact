@@ -14,7 +14,7 @@ const RadioButtonForm = ({ name, currentValue, optionalList, changeFilterValue }
     <div className="criteria-container">
       <form className="radio-button-container">
         {optionalList.map((value) => (
-          <div key={value} className="button-container">
+          <div key={value} className="rad-button-container">
             <div>
               <input
                 type="radio"
