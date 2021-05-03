@@ -1,10 +1,10 @@
-import { AuthState, Action } from "../../types";
+import { AuthState, AuthAction } from "../../types";
 
 const INITIAL_STATE: AuthState = {
   user: null,
 };
 
-export default (state = INITIAL_STATE, action: Action): AuthState => {
+export default (state = INITIAL_STATE, action: AuthAction): AuthState => {
   switch (action.type) {
     case "SIGN_IN":
       return { ...state, user: action.payload };

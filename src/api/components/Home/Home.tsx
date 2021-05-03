@@ -12,6 +12,7 @@ function Home(): ReactElement {
   const top3Games = topGames.map((game) => (
     <GameCard
       key={game.id}
+      id={game.id}
       name={game.name}
       cost={game.price}
       imageLink={game.image}

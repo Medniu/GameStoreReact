@@ -7,6 +7,7 @@ import Alert from "./Alert/Alert";
 import "../../styles/global.css";
 import ProfilePage from "./ProfilePage/ProfilePage";
 import PrivateRoute from "./Route/PrivateRoute";
+import ShoppingCart from "./ShoppingCart/ShoppingCart";
 
 type State = {
   hasError: boolean;
@@ -37,6 +38,7 @@ class App extends React.Component<AppProps, State> {
           <PrivateRoute path="/products/:category" pageComponent={Products} />
           <PrivateRoute path="/About" pageComponent={About} />
           <PrivateRoute path="/profile" pageComponent={ProfilePage} />
+          <PrivateRoute path="/cart" pageComponent={ShoppingCart} />
           <Route render={() => <Redirect to={{ pathname: "/" }} />} />
         </Switch>
         {this.state.hasError && (

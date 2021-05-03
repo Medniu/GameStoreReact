@@ -24,6 +24,15 @@ type Item = {
   age: string;
 };
 
+type CartItem = {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  category: string;
+  isSelected: boolean;
+};
+
 type User = {
   photo: string;
   login: string;
@@ -35,13 +44,23 @@ type AuthState = {
   user: User | null | undefined;
 };
 
-type AllState = {
-  auth: AuthState;
+type CartState = {
+  items: Array<CartItem>;
+  total: number;
 };
 
-type Action = {
+type AllState = {
+  auth: AuthState;
+  cart: CartState;
+};
+
+type AuthAction = {
   type: string;
   payload: User | null | undefined;
 };
 
-export { User, AuthState, AllState, TopGames, Params, Item, Action };
+type CartAction = {
+  type: string;
+  payload: Item | null | undefined;
+};
+export { User, AuthState, AllState, TopGames, Params, Item, AuthAction, CartState, CartAction, CartItem };

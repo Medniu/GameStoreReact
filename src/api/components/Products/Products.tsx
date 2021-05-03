@@ -24,6 +24,7 @@ function Products(): ReactElement {
   const listGames = gameCards.map((game) => (
     <GameCard
       key={game.id}
+      id={game.id}
       name={game.name}
       cost={game.price}
       imageLink={game.image}

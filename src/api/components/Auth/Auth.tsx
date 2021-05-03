@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { User, AllState } from "@/types";
 import Modal from "../Modal/Modal";
 import "./Auth.css";
+import cartIcon from "../../assets/images/Cart.png";
 
 function Auth(): ReactElement {
   const [email, setEmail] = useState("");
@@ -65,7 +66,7 @@ function Auth(): ReactElement {
 
   return !user ? (
     <>
-      <div className="menu-right">
+      <div className="auth-link-container">
         <li className="auth">
           <button className="auth-button" type="button" onClick={() => setLoginModalIsOpen(true)}>
             Login
@@ -136,16 +137,23 @@ function Auth(): ReactElement {
     </>
   ) : (
     <div className="menu-right">
-      <li className="auth">
-        <Link className="profile-link" to="/profile">
-          {user.login}
+      <div className="cart-link-container">
+        <Link className="cart-link" to="/cart">
+          <img className="cart-img" src={cartIcon} alt="fireSpot" />
         </Link>
-      </li>
-      <li className="auth">
-        <button className="auth-button" type="button" onClick={() => signOut()}>
-          Sign out
-        </button>
-      </li>
+      </div>
+      <div className="auth-link-container">
+        <div className="auth">
+          <Link className="profile-link" to="/profile">
+            {user.login}
+          </Link>
+        </div>
+        <div className="auth">
+          <button className="auth-button" type="button" onClick={() => signOut()}>
+            Sign out
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,11 @@
 import { ReactElement } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { User, AllState } from "@/types";
 import "./GameCard.css";
+import plusIcon from "../../assets/images/Plus.png";
 
 interface ContainerProps {
+  id: number;
   imageLink: string;
   name: string;
   rating: number;
@@ -10,17 +14,15 @@ interface ContainerProps {
   description: string;
 }
 
-const AcceptClick = () => {
-  alert("Get item");
-};
+function GameCard({ id, imageLink, name, rating, cost, category, description }: ContainerProps): ReactElement {
+  const dispatch = useDispatch();
+  const user = useSelector((state: AllState) => state.auth.user);
+  const AddToCart = () => {
+    dispatch({ type: "ADD_TO_CART", payload: { id, name, price: cost, category } });
+  };
 
-const handleKeyDown = () => {
-  alert("Get item");
-};
-
-function GameCard({ imageLink, name, rating, cost, category, description }: ContainerProps): ReactElement {
   return (
-    <div className="game-card-container" onClick={AcceptClick} onKeyDown={handleKeyDown} role="button" tabIndex={0}>
+    <div className="game-card-container">
       <div className="image-container">
         <img src={imageLink} alt="searchLogo" className="image-container" />
       </div>
@@ -28,6 +30,11 @@ function GameCard({ imageLink, name, rating, cost, category, description }: Cont
         <p>{name}</p>
         <p>Rating: {rating}</p>
       </div>
+      {user && (
+        <div className="add-button-container">
+          <img className="plus-img" src={plusIcon} alt="fireSpot" onClick={() => AddToCart()} />
+        </div>
+      )}
       <div className="price">
         <p> {cost} BYN</p>
       </div>
