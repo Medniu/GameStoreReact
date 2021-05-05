@@ -48,9 +48,27 @@
   color: blue;
 }
 
-.buttons-container button:hover {
+.profile-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+}
+.profile-button-container button {
+  background-color: white;
+  height: 40px;
+  margin: 10px;
+  border-radius: 5px;
+  border-color: blue;
+  color: blue;
+  box-shadow: 0 0 0 60px rgba(0, 0, 0, 0) inset, 0.1em 0.1em 0.2em blue;
+}
+.profile-button-container button:active {
+  box-shadow: 0 0 0 60px rgba(0, 0, 0, 0.05) inset;
+}
+.profile-button-container button:hover {
   background-color: chartreuse;
 }
+
 .modal-body {
   font-size: 18px;
   color: black;

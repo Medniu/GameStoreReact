@@ -39,7 +39,7 @@ function inputText({ value, name, placeholder, type, setInputField }: InputProps
   const onUserInfoInput = (inputInfo: string) => {
     let userError = "";
     if (!inputInfo) {
-      userError = "Contacts cant be empty";
+      userError = "This field cant be empty";
     }
     if (userError) {
       setUserInfoError(userError);

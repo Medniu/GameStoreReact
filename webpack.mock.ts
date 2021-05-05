@@ -12,11 +12,12 @@ type User = {
   address: string;
   phoneNumber: string;
   password: string;
+  role: string;
 };
 
 const data: Array<Item> = [
   {
-    id: 1,
+    id: 0,
     name: "Forza 5",
     price: 70,
     description: "someText",
@@ -27,7 +28,7 @@ const data: Array<Item> = [
     age: "12",
   },
   {
-    id: 2,
+    id: 1,
     name: "Fifa 21",
     price: 120,
     description: "someText",
@@ -38,7 +39,7 @@ const data: Array<Item> = [
     age: "6",
   },
   {
-    id: 3,
+    id: 2,
     name: "Pes 21",
     price: 85,
     description: "someText",
@@ -49,7 +50,7 @@ const data: Array<Item> = [
     age: "6",
   },
   {
-    id: 4,
+    id: 3,
     name: "Call of Duty 4",
     price: 75,
     description: "someText",
@@ -61,7 +62,7 @@ const data: Array<Item> = [
     age: "18",
   },
   {
-    id: 5,
+    id: 4,
     name: "Battlefield",
     price: 40,
     description: "someText",
@@ -72,7 +73,7 @@ const data: Array<Item> = [
     age: "18",
   },
   {
-    id: 6,
+    id: 5,
     name: "Need for Speed",
     price: 65,
     description: "someText",
@@ -83,7 +84,7 @@ const data: Array<Item> = [
     age: "6",
   },
   {
-    id: 7,
+    id: 6,
     name: "Warcraft 3",
     price: 30,
     description: "someText",
@@ -104,6 +105,7 @@ const userList: Array<User> = [
     address: "Minsk",
     phoneNumber: "+375295555555",
     password: "123456",
+    role: "user",
   },
   {
     login: "Ilya@mail.ru",
@@ -112,6 +114,7 @@ const userList: Array<User> = [
     address: "Minsk",
     phoneNumber: "+375295555555",
     password: "654321",
+    role: "user",
   },
   {
     login: "Danik@mail.ru",
@@ -120,6 +123,7 @@ const userList: Array<User> = [
     address: "Minsk",
     phoneNumber: "+375295555555",
     password: "123321",
+    role: "user",
   },
   {
     login: "Cat@mail.ru",
@@ -127,6 +131,7 @@ const userList: Array<User> = [
     address: "Pinsk",
     phoneNumber: "+375295555555",
     password: "111111",
+    role: "admin",
   },
 ];
 
@@ -199,6 +204,28 @@ export default webpackMockServer.add((app, helper) => {
       res.status(400).json("Unvalid login or password");
     }
   });
+  app.post("/api/product", (_req, res) => {
+    const { name, category, genre, age, price, image } = _req.body;
+    const newItem: Item = { id: data.length, name, category, genre, age, price, image, rating: 0, description: "" };
+    data.push(newItem);
+    res.json(newItem.id);
+  });
+
+  app.put("/api/product", (_req, res) => {
+    const { id, gameName, platform, gameGenre, gameRate, price } = _req.body;
+    const changedItem = data.find((item: Item) => item.id === id);
+    if (changedItem) {
+      changedItem.name = gameName;
+      changedItem.category = platform;
+      changedItem.genre = gameGenre;
+      changedItem.age = gameRate;
+      changedItem.price = price;
+      res.json(id);
+      console.log(data);
+    } else {
+      res.status(401).json(null);
+    }
+  });
 
   app.put("/auth/signUp", (_req, res) => {
     const { login, password } = _req.body;
@@ -211,6 +238,7 @@ export default webpackMockServer.add((app, helper) => {
           "https://st.depositphotos.com/1779253/5140/v/600/depositphotos_51402215-stock-illustration-male-avatar-profile-picture-use.jpg",
         address: "",
         phoneNumber: "",
+        role: "user",
       };
       res.json(newUser);
     } else {
@@ -221,6 +249,17 @@ export default webpackMockServer.add((app, helper) => {
   app.get("/api/getTopProducts", (_req, res) => {
     const response = data.sort((a, b) => (a.rating < b.rating ? 1 : -1)).slice(0, 3);
     res.json(response);
+  });
+
+  app.delete(`/api/product`, (_req, res) => {
+    let response;
+    if (_req.query && typeof _req.query.id === "string") {
+      const { id } = _req.query;
+      const indexOfDeletedItem = data.findIndex((item: Item) => item.id === +id);
+      data.splice(indexOfDeletedItem, 1);
+    }
+    console.log(data);
+    return res.json(response);
   });
 
   app.get(`/api/getGames`, (_req, res) => {

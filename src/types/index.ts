@@ -5,7 +5,9 @@ interface TopGames {
   image: string;
   description: string;
   category: string;
+  genre: string;
   rating: number;
+  age: string;
 }
 
 interface Params {
@@ -38,6 +40,7 @@ type User = {
   login: string;
   address: string;
   phoneNumber: string;
+  role: string;
 };
 
 type AuthState = {

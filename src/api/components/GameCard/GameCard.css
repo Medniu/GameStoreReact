@@ -3,7 +3,7 @@
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  width: 120px;
+  width: 130px;
   border: 1px solid black;
   border-radius: 20px;
   margin: 5px;
@@ -50,7 +50,65 @@
 
 .add-button-container {
   display: flex;
-  justify-content: flex-end;
-  height: 40px;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 50px;
   width: 100%;
+}
+
+.game-image-container {
+  display: flex;
+  justify-content: center;
+  width: 200px;
+  height: 300px;
+}
+
+.game-info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px;
+}
+
+.photo-info-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.buttons-container {
+  justify-content: space-between !important;
+}
+
+.update-item-button {
+  background-color: white;
+  height: 40px;
+  margin: 5px 0px;
+  border-radius: 5px;
+  border-color: green;
+  color: green;
+  box-shadow: 0 0 0 60px rgba(0, 0, 0, 0) inset, 0.1em 0.1em 0.2em green;
+}
+
+.update-item-button:hover {
+  box-shadow: 0 0 0 60px rgba(0, 0, 0, 0.05) inset;
+}
+.remove-item-button {
+  background-color: white;
+  height: 40px;
+  margin: 5px 0px;
+  border-radius: 5px;
+  border-color: red;
+  color: red;
+  box-shadow: 0 0 0 60px rgba(0, 0, 0, 0) inset, 0.1em 0.1em 0.2em red;
+}
+
+.remove-item-button:hover {
+  box-shadow: 0 0 0 60px rgba(0, 0, 0, 0.05) inset;
 }

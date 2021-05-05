@@ -8,7 +8,7 @@ import "./Home.css";
 
 function Home(): ReactElement {
   const [topGames, setTopGames] = useState<TopGames[]>([]);
-
+  const [isItemUpdate, setIsItemUpdate] = useState(false);
   const top3Games = topGames.map((game) => (
     <GameCard
       key={game.id}
@@ -16,9 +16,12 @@ function Home(): ReactElement {
       name={game.name}
       cost={game.price}
       imageLink={game.image}
-      description={game.description}
+      age={game.age}
+      genre={game.genre}
       category={game.category}
       rating={game.rating}
+      isItemUpdate={isItemUpdate}
+      setIsItemUpdate={setIsItemUpdate}
     />
   ));
   useEffect(() => {
@@ -26,7 +29,7 @@ function Home(): ReactElement {
       const gameList = response.data;
       setTopGames(gameList);
     });
-  }, []);
+  }, [isItemUpdate]);
 
   return (
     <div>

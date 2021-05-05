@@ -17,8 +17,8 @@
   padding: 20px;
   border-radius: 12px;
   background-color: white;
-  height: 330px;
-  width: 400px;
+  height: auto;
+  width: auto;
 }
 
 .modal .modal_close-button {

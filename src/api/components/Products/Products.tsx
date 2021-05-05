@@ -2,14 +2,17 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Spinner } from "react-spinners-css";
 import axios from "axios";
-import { Item, Params } from "@/types";
+import { AllState, Item, Params } from "@/types";
+import { useSelector } from "react-redux";
 import Container from "../Container/Container";
 import SearchBar from "../SearchBar/SearchBar";
 import GameCard from "../GameCard/GameCard";
 import useDebounce from "./useDebounce";
+import InputText from "../../../elements/inputText";
 import "./Product.css";
 import DropDown from "../DropDown/DropDown";
 import RadioButtonForm from "../RadioButton/RadioButtonForm";
+import Modal from "../Modal/Modal";
 
 function Products(): ReactElement {
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,8 +22,43 @@ function Products(): ReactElement {
   const [sortType, setSortType] = useState("Desc");
   const [genreFilter, setGenreFilter] = useState("All");
   const [ageFilter, setAgeFilter] = useState("All");
+  const [isItemUpdate, setIsItemUpdate] = useState(false);
   const debounceSearchTerm = useDebounce(searchTerm, 300);
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [newGameName, setNewGameName] = useState("");
+  const [newGameCategory, setNewGameCategory] = useState("Ps4");
+  const [newGameGenre, setNewGameGenre] = useState("Racing");
+  const [newGameAgeRating, setNewGameAgeRating] = useState("6");
+  const [newGamePrice, setNewGamePrice] = useState("");
+  const [newGameImgUrl, setNewGameImgUrl] = useState("");
+
   const { category } = useParams<Params>();
+  const user = useSelector((state: AllState) => state.auth.user);
+  const UploadPicture = () => {
+    setNewGameImgUrl(
+      "https://upload.wikimedia.org/wikipedia/ru/thumb/a/a2/The_Witcher_3-_Wild_Hunt_Cover.jpg/266px-The_Witcher_3-_Wild_Hunt_Cover.jpg"
+    );
+  };
+  const CreateGame = () => {
+    if (newGameName && newGamePrice && newGameCategory) {
+      axios
+        .post("/api/product", {
+          name: newGameName,
+          category: newGameCategory,
+          genre: newGameGenre,
+          age: newGameAgeRating,
+          price: newGamePrice,
+          image: newGameImgUrl,
+        })
+        .then(({ data }) => {
+          setModalIsOpen(false);
+          setIsItemUpdate(!isItemUpdate);
+        });
+    } else {
+      alert("Check input data and try again");
+    }
+  };
   const listGames = gameCards.map((game) => (
     <GameCard
       key={game.id}
@@ -28,9 +66,12 @@ function Products(): ReactElement {
       name={game.name}
       cost={game.price}
       imageLink={game.image}
-      description={game.description}
+      age={game.age}
+      genre={game.genre}
       category={game.category}
       rating={game.rating}
+      isItemUpdate={isItemUpdate}
+      setIsItemUpdate={setIsItemUpdate}
     />
   ));
   useEffect(() => {
@@ -50,7 +91,7 @@ function Products(): ReactElement {
         setIsSearching(false);
         setGameCards(gameList);
       });
-  }, [debounceSearchTerm, category, sortCriteria, sortType, genreFilter, ageFilter]);
+  }, [debounceSearchTerm, category, sortCriteria, sortType, genreFilter, ageFilter, isItemUpdate]);
 
   return (
     <>
@@ -105,12 +146,89 @@ function Products(): ReactElement {
                   setSearchTerm={setSearchTerm}
                   setIsSearching={setIsSearching}
                 />
+                {user?.role === "admin" && (
+                  <button type="button" className="new-game-button" onClick={() => setModalIsOpen(true)}>
+                    Create new game
+                  </button>
+                )}
               </div>
               <div className="game-list"> {isSearching ? <Spinner /> : listGames}</div>
             </div>
           </div>
         </Container>
       </div>
+      <Modal open={modalIsOpen} onClose={() => setModalIsOpen(false)}>
+        <div className="modal-body">
+          <div className="game-info-container">
+            <div className="photo-info-container">
+              <div className="photo-container">
+                <img src={newGameImgUrl} alt="searchLogo" className="game-image-container" />
+              </div>
+              <div className="game-container">
+                <div className="criteria-container">
+                  <div>Name: </div>
+                  <InputText
+                    value={newGameName}
+                    setInputField={setNewGameName}
+                    name="name"
+                    type="name"
+                    placeholder="Input name"
+                  />
+                </div>
+                <div className="criteria-container">
+                  <DropDown
+                    dropDownName="Platform:"
+                    currentValue={newGameCategory}
+                    optionalList={["Ps4", "PC", "Xbox"]}
+                    changeSortType={setNewGameCategory}
+                  />
+                </div>
+                <div className="criteria-container">
+                  <DropDown
+                    dropDownName="Genre:"
+                    currentValue={newGameGenre}
+                    optionalList={["Racing", "Sport", "Shooter", "Strategy"]}
+                    changeSortType={setNewGameGenre}
+                  />
+                </div>
+                <div className="criteria-container">
+                  <DropDown
+                    dropDownName="Rating:"
+                    currentValue={newGameAgeRating}
+                    optionalList={["6", "12", "18"]}
+                    changeSortType={setNewGameAgeRating}
+                  />
+                </div>
+                <div className="criteria-container">
+                  <div>Price: </div>
+                  <InputText
+                    value={newGamePrice}
+                    setInputField={setNewGamePrice}
+                    name="price"
+                    type="price"
+                    placeholder="Input price"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="buttons-container">
+              <div>
+                <button className="new-game-button" type="button" onClick={() => UploadPicture()}>
+                  Upload picture
+                </button>
+                <button className="new-game-button" type="button" onClick={() => CreateGame()}>
+                  Add
+                </button>
+              </div>
+              <div>
+                <button className="new-game-button" type="button" onClick={() => setModalIsOpen(false)}>
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </>
   );
 }

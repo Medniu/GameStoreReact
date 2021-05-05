@@ -94,7 +94,7 @@ function ProfilePage(): ReactElement {
                 setInputField={setphoneNumber}
               />
             </div>
-            <div className="buttons-container">
+            <div className="profile-button-container">
               <button type="button" onClick={() => updateContacts()}>
                 Update contacts
               </button>
