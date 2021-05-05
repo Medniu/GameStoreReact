@@ -41,25 +41,27 @@ function GameCard({
   const [price, setPrice] = useState(cost.toString());
   const dispatch = useDispatch();
   const user = useSelector((state: AllState) => state.auth.user);
-  const AddToCart = () => {
+  const addToCart = () => {
     dispatch({ type: "ADD_TO_CART", payload: { id, name, price: cost, category } });
   };
-  const UploadPicture = () => {
+  const uploadPicture = () => {
     alert("Upload picture");
   };
-  const SaveChanges = () => {
+  const saveChanges = () => {
     if (gameName && price) {
-      axios.put("/api/product", { id, gameName, platform, gameGenre, gameRate, price }).then(({ data }) => {
-        const productId: number = data;
-        console.log(productId);
-        setModalIsOpen(false);
-        setIsItemUpdate(!isItemUpdate);
-      });
+      axios
+        .put("/api/product", { id, name: gameName, category: platform, genre: gameGenre, age: gameRate, price })
+        .then(({ data }) => {
+          const productId: number = data;
+          console.log(productId);
+          setModalIsOpen(false);
+          setIsItemUpdate(!isItemUpdate);
+        });
     } else {
       alert("Check input data and try again");
     }
   };
-  const DeleteItem = () => {
+  const deleteItem = () => {
     const conf = window.confirm(`Are you sure  you want to delete the product ${name} ?`);
     if (conf === true) {
       axios
@@ -87,13 +89,13 @@ function GameCard({
               <button className="update-item-button" type="button" onClick={() => setModalIsOpen(true)}>
                 Update
               </button>
-              <button className="remove-item-button" type="button" onClick={() => DeleteItem()}>
+              <button className="remove-item-button" type="button" onClick={() => deleteItem()}>
                 Remove
               </button>
             </div>
           ) : (
             <div className="add-button-container">
-              <img className="plus-img" src={plusIcon} alt="fireSpot" onClick={() => AddToCart()} />
+              <img className="plus-img" src={plusIcon} alt="fireSpot" onClick={() => addToCart()} />
             </div>
           ))}
         <div className="price">
@@ -157,10 +159,10 @@ function GameCard({
             </div>
             <div className="buttons-container">
               <div>
-                <button className="new-game-button" type="button" onClick={() => UploadPicture()}>
+                <button className="new-game-button" type="button" onClick={() => uploadPicture()}>
                   Upload picture
                 </button>
-                <button className="new-game-button" type="button" onClick={() => SaveChanges()}>
+                <button className="new-game-button" type="button" onClick={() => saveChanges()}>
                   Save
                 </button>
               </div>

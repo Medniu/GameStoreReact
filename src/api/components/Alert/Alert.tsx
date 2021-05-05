@@ -8,7 +8,7 @@ interface IContainerProps {
   setActive: (active: boolean) => void;
 }
 
-const AcceptClick = (setActive: (active: boolean) => void) => {
+const acceptClick = (setActive: (active: boolean) => void) => {
   console.log("Clicked");
   setActive(false);
 };
@@ -18,7 +18,7 @@ const Alert = ({ title, hasError, errorMessage, setActive }: IContainerProps): R
     <div className="alert-content">
       {title}
       <h1> {errorMessage} </h1>
-      <button type="submit" onClick={() => AcceptClick(setActive)}>
+      <button type="submit" onClick={() => acceptClick(setActive)}>
         Click Here
       </button>
     </div>

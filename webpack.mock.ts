@@ -212,16 +212,11 @@ export default webpackMockServer.add((app, helper) => {
   });
 
   app.put("/api/product", (_req, res) => {
-    const { id, gameName, platform, gameGenre, gameRate, price } = _req.body;
-    const changedItem = data.find((item: Item) => item.id === id);
+    console.log(data);
+    const changedItem = data.find((item: Item) => item.id === _req.body.id);
     if (changedItem) {
-      changedItem.name = gameName;
-      changedItem.category = platform;
-      changedItem.genre = gameGenre;
-      changedItem.age = gameRate;
-      changedItem.price = price;
-      res.json(id);
-      console.log(data);
+      Object.assign(changedItem, { ..._req.body, price: +_req.body.price });
+      res.json(_req.body.id);
     } else {
       res.status(401).json(null);
     }

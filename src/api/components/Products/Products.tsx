@@ -35,12 +35,12 @@ function Products(): ReactElement {
 
   const { category } = useParams<Params>();
   const user = useSelector((state: AllState) => state.auth.user);
-  const UploadPicture = () => {
+  const uploadPicture = () => {
     setNewGameImgUrl(
       "https://upload.wikimedia.org/wikipedia/ru/thumb/a/a2/The_Witcher_3-_Wild_Hunt_Cover.jpg/266px-The_Witcher_3-_Wild_Hunt_Cover.jpg"
     );
   };
-  const CreateGame = () => {
+  const createGame = () => {
     if (newGameName && newGamePrice && newGameCategory) {
       axios
         .post("/api/product", {
@@ -213,10 +213,10 @@ function Products(): ReactElement {
             </div>
             <div className="buttons-container">
               <div>
-                <button className="new-game-button" type="button" onClick={() => UploadPicture()}>
+                <button className="new-game-button" type="button" onClick={() => uploadPicture()}>
                   Upload picture
                 </button>
-                <button className="new-game-button" type="button" onClick={() => CreateGame()}>
+                <button className="new-game-button" type="button" onClick={() => createGame()}>
                   Add
                 </button>
               </div>

@@ -12,17 +12,17 @@ function ShoppingCart(): ReactElement {
   const onSelectClick = (cartId: number) => {
     dispatch({ type: "SELECT_ITEM", payload: { id: cartId } });
   };
-  const BuyItems = () => {
+  const buyItems = () => {
     dispatch({ type: "BUY_ITEMS" });
     alert("Thank you for your purchase");
   };
-  const RemoveItems = () => {
+  const removeItems = () => {
     dispatch({ type: "REMOVE_ITEMS" });
   };
-  const IncreaseQuantity = (cartId: number) => {
+  const increaseQuantity = (cartId: number) => {
     dispatch({ type: "ADD_QUANTITY", payload: { id: cartId } });
   };
-  const DecreaseQuantity = (cartId: number) => {
+  const decreaseQuantity = (cartId: number) => {
     dispatch({ type: "REMOVE_QUANTITY", payload: { id: cartId } });
   };
 
@@ -49,10 +49,10 @@ function ShoppingCart(): ReactElement {
                     <div className="quantity-container">
                       <div className="quantity-value">{item.quantity}</div>
                       <div className="quantity-buttons-container">
-                        <button type="button" className="quantity-button" onClick={() => IncreaseQuantity(item.id)}>
+                        <button type="button" className="quantity-button" onClick={() => increaseQuantity(item.id)}>
                           +
                         </button>
-                        <button type="button" className="quantity-button" onClick={() => DecreaseQuantity(item.id)}>
+                        <button type="button" className="quantity-button" onClick={() => decreaseQuantity(item.id)}>
                           -
                         </button>
                       </div>
@@ -72,10 +72,10 @@ function ShoppingCart(): ReactElement {
               <div>Total:{totalSum}</div>
             </div>
             <div className="button-container">
-              <button className="buy-button" type="button" onClick={BuyItems}>
+              <button className="buy-button" type="button" onClick={buyItems}>
                 Buy
               </button>
-              <button className="remove-button" type="button" onClick={RemoveItems}>
+              <button className="remove-button" type="button" onClick={removeItems}>
                 Remove
               </button>
             </div>

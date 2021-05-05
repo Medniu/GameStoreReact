@@ -34,14 +34,6 @@ function ProfilePage(): ReactElement {
     }
   };
 
-  const openChangePasswordModal = () => {
-    setChangePasswordModel(true);
-  };
-
-  const closePasswordModal = () => {
-    setChangePasswordModel(false);
-  };
-
   const updatePassword = () => {
     if (newPassword === newConfirmedPassword) {
       axios.post("/api/changePassword", { login: user?.login, newPassword, oldPassword }).then(({ data }) => {
@@ -98,7 +90,7 @@ function ProfilePage(): ReactElement {
               <button type="button" onClick={() => updateContacts()}>
                 Update contacts
               </button>
-              <button type="button" onClick={() => openChangePasswordModal()}>
+              <button type="button" onClick={() => setChangePasswordModel(true)}>
                 Change password
               </button>
               <button type="button" onClick={() => signOut()}>
@@ -108,7 +100,7 @@ function ProfilePage(): ReactElement {
           </div>
         </div>
       </Container>
-      <Modal open={changePasswordModel} onClose={closePasswordModal}>
+      <Modal open={changePasswordModel} onClose={() => setChangePasswordModel(false)}>
         <div className="modal-body">
           <form className="form-container">
             <h2>Changing password</h2>
