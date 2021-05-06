@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useCallback } from "react";
 import "./SearchBar.css";
 import searchLogo from "../../assets/images/search.png";
 
@@ -10,13 +10,16 @@ interface ContainerProps {
 }
 
 function SearchBar({ searchTerm, isSearching, setSearchTerm, setIsSearching }: ContainerProps): ReactElement {
-  const onInputClick = (search: string) => {
-    if (!isSearching) {
-      setIsSearching(true);
-    }
-    console.log(search);
-    setSearchTerm(search);
-  };
+  const onInputClick = useCallback(
+    (search: string) => {
+      if (!isSearching) {
+        setIsSearching(true);
+      }
+      console.log(search);
+      setSearchTerm(search);
+    },
+    [searchTerm]
+  );
 
   return (
     <div className="wrap">

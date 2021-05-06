@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useCallback, useState } from "react";
 import { Route, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -18,7 +18,7 @@ const PrivateRoute = ({ pageComponent, path }: Props): ReactElement => {
   const dispatch = useDispatch();
   const user = useSelector((state: AllState) => state.auth.user);
 
-  const onLoginClick = () => {
+  const onLoginClick = useCallback(() => {
     if (email && formPassword) {
       axios.post("/auth/signIn", { login: email, password: formPassword }).then((response) => {
         const userProfile: User = response.data;
@@ -28,12 +28,12 @@ const PrivateRoute = ({ pageComponent, path }: Props): ReactElement => {
     } else {
       alert("Check input data and repeat");
     }
-  };
+  }, [email, formPassword, user]);
 
-  const closeLoginModal = () => {
+  const closeLoginModal = useCallback(() => {
     setLoginModalIsOpen(false);
     history.push("/");
-  };
+  }, [user]);
   return (
     <>
       <Route path={path} component={pageComponent} />

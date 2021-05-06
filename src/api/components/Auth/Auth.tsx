@@ -50,10 +50,11 @@ function Auth(): ReactElement {
     }
   };
 
-  const signOut = () => {
+  const signOut = useCallback(() => {
     dispatch({ type: "SIGN_OUT" });
     history.push("/");
-  };
+  }, [user]);
+
   const closeLoginModal = useCallback(() => {
     setLoginModalIsOpen(false);
     history.push("/");

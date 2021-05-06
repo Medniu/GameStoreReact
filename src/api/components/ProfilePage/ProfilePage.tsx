@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { AllState, User } from "@/types";
@@ -19,11 +19,12 @@ function ProfilePage(): ReactElement {
   const [newConfirmedPassword, setNewConfirmedPassword] = useState("");
   const history = useHistory();
 
-  const signOut = () => {
+  const signOut = useCallback(() => {
     dispatch({ type: "SIGN_OUT" });
     history.push("/");
-  };
-  const updateContacts = () => {
+  }, [user]);
+
+  const updateContacts = useCallback(() => {
     if (address && phoneNumber) {
       axios.post("/api/saveProfile", { login: user?.login, address, phoneNumber }).then(({ data }) => {
         const userProfile: User = data;
@@ -32,9 +33,9 @@ function ProfilePage(): ReactElement {
     } else {
       alert("Check input data and try again");
     }
-  };
+  }, [address, phoneNumber]);
 
-  const updatePassword = () => {
+  const updatePassword = useCallback(() => {
     if (newPassword === newConfirmedPassword) {
       axios.post("/api/changePassword", { login: user?.login, newPassword, oldPassword }).then(({ data }) => {
         const responseMessage: boolean = data;
@@ -48,7 +49,7 @@ function ProfilePage(): ReactElement {
     } else {
       alert("Check new and confirmed password and try again");
     }
-  };
+  }, [newPassword, newConfirmedPassword, oldPassword]);
   return !user ? (
     <div>
       <Container>

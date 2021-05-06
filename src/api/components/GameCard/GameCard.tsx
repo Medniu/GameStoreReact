@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AllState } from "@/types";
 import axios from "axios";
@@ -42,12 +42,12 @@ function GameCard({
   const dispatch = useDispatch();
   const user = useSelector((state: AllState) => state.auth.user);
   const addToCart = () => {
-    dispatch({ type: "ADD_TO_CART", payload: { id, name, price: cost, category } });
+    dispatch({ type: "ADD_TO_CART", payload: { id, name: gameName, price: +price, category: platform } });
   };
-  const uploadPicture = () => {
+  const uploadPicture = useCallback(() => {
     alert("Upload picture");
-  };
-  const saveChanges = () => {
+  }, []);
+  const saveChanges = useCallback(() => {
     if (gameName && price) {
       axios
         .put("/api/product", { id, name: gameName, category: platform, genre: gameGenre, age: gameRate, price })
@@ -60,8 +60,8 @@ function GameCard({
     } else {
       alert("Check input data and try again");
     }
-  };
-  const deleteItem = () => {
+  }, [gameName, price, platform, gameGenre, gameRate]);
+  const deleteItem = useCallback(() => {
     const conf = window.confirm(`Are you sure  you want to delete the product ${name} ?`);
     if (conf === true) {
       axios
@@ -72,7 +72,7 @@ function GameCard({
           setIsItemUpdate(!isItemUpdate);
         });
     }
-  };
+  }, [id]);
   return (
     <>
       <div className="game-card-container">

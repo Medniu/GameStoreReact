@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Spinner } from "react-spinners-css";
 import axios from "axios";
@@ -35,12 +35,13 @@ function Products(): ReactElement {
 
   const { category } = useParams<Params>();
   const user = useSelector((state: AllState) => state.auth.user);
-  const uploadPicture = () => {
+  const uploadPicture = useCallback(() => {
     setNewGameImgUrl(
       "https://upload.wikimedia.org/wikipedia/ru/thumb/a/a2/The_Witcher_3-_Wild_Hunt_Cover.jpg/266px-The_Witcher_3-_Wild_Hunt_Cover.jpg"
     );
-  };
-  const createGame = () => {
+  }, [newGameImgUrl]);
+
+  const createGame = useCallback(() => {
     if (newGameName && newGamePrice && newGameCategory) {
       axios
         .post("/api/product", {
@@ -58,7 +59,7 @@ function Products(): ReactElement {
     } else {
       alert("Check input data and try again");
     }
-  };
+  }, [newGamePrice, newGameName, newGameImgUrl, newGameCategory, newGameGenre, newGameAgeRating]);
   const listGames = gameCards.map((game) => (
     <GameCard
       key={game.id}
