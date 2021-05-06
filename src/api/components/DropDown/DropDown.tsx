@@ -22,4 +22,4 @@ const DropDown = ({ dropDownName, currentValue, optionalList, changeSortType }: 
     </div>
   </>
 );
-export default DropDown;
+export default React.memo(DropDown);

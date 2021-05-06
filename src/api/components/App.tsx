@@ -1,13 +1,14 @@
 import { Route, Switch, Redirect, withRouter, RouteComponentProps } from "react-router-dom";
-import React, { ReactElement } from "react";
+import React, { ReactElement, Suspense } from "react";
 import Home from "./Home/Home";
-import Products from "./Products/Products";
-import About from "./About/About";
 import Alert from "./Alert/Alert";
 import "../../styles/global.css";
-import ProfilePage from "./ProfilePage/ProfilePage";
 import PrivateRoute from "./Route/PrivateRoute";
-import ShoppingCart from "./ShoppingCart/ShoppingCart";
+
+const Products = React.lazy(() => import("./Products/Products"));
+const About = React.lazy(() => import("./About/About"));
+const ProfilePage = React.lazy(() => import("./ProfilePage/ProfilePage"));
+const ShoppingCart = React.lazy(() => import("./ShoppingCart/ShoppingCart"));
 
 type State = {
   hasError: boolean;
@@ -33,22 +34,24 @@ class App extends React.Component<AppProps, State> {
   render(): ReactElement {
     return (
       <>
-        <Switch>
-          <Route exact path="/" component={() => <Home />} />
-          <PrivateRoute path="/products/:category" pageComponent={Products} />
-          <PrivateRoute path="/About" pageComponent={About} />
-          <PrivateRoute path="/profile" pageComponent={ProfilePage} />
-          <PrivateRoute path="/cart" pageComponent={ShoppingCart} />
-          <Route render={() => <Redirect to={{ pathname: "/" }} />} />
-        </Switch>
-        {this.state.hasError && (
-          <Alert
-            title="Error Title"
-            hasError={this.state.hasError}
-            errorMessage="Some Error"
-            setActive={this.handleAlertState}
-          />
-        )}
+        <Suspense fallback={<div>Loading...</div>}>
+          <Switch>
+            <Route exact path="/" component={() => <Home />} />
+            <PrivateRoute path="/products/:category" pageComponent={Products} />
+            <PrivateRoute path="/About" pageComponent={About} />
+            <PrivateRoute path="/profile" pageComponent={ProfilePage} />
+            <PrivateRoute path="/cart" pageComponent={ShoppingCart} />
+            <Route render={() => <Redirect to={{ pathname: "/" }} />} />
+          </Switch>
+          {this.state.hasError && (
+            <Alert
+              title="Error Title"
+              hasError={this.state.hasError}
+              errorMessage="Some Error"
+              setActive={this.handleAlertState}
+            />
+          )}
+        </Suspense>
       </>
     );
   }

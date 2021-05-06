@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import React, { ReactElement } from "react";
 import Container from "../Container/Container";
 
 function About(): ReactElement {
@@ -13,4 +13,4 @@ function About(): ReactElement {
   );
 }
 
-export default About;
+export default React.memo(About);

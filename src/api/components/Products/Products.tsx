@@ -92,7 +92,6 @@ function Products(): ReactElement {
         setGameCards(gameList);
       });
   }, [debounceSearchTerm, category, sortCriteria, sortType, genreFilter, ageFilter, isItemUpdate]);
-
   return (
     <>
       <div>
@@ -233,4 +232,4 @@ function Products(): ReactElement {
   );
 }
 
-export default Products;
+export default React.memo(Products);

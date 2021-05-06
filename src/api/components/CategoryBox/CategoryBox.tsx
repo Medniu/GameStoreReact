@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 import "./CategoryBox.css";
 
@@ -14,4 +14,4 @@ function CategoryBox({ link, categoryName }: Props): ReactElement {
   );
 }
 
-export default CategoryBox;
+export default React.memo(CategoryBox);

@@ -1,4 +1,4 @@
-import { ReactElement, useState, useEffect } from "react";
+import React, { ReactElement, useState, useEffect } from "react";
 import axios from "axios";
 import { TopGames } from "@/types";
 import CategoryBox from "../CategoryBox/CategoryBox";
@@ -30,7 +30,6 @@ function Home(): ReactElement {
       setTopGames(gameList);
     });
   }, [isItemUpdate]);
-
   return (
     <div>
       <Container>
@@ -48,4 +47,4 @@ function Home(): ReactElement {
   );
 }
 
-export default Home;
+export default React.memo(Home);

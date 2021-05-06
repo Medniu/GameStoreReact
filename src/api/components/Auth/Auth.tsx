@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useCallback, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import InputText from "@/elements/inputText";
@@ -54,15 +54,15 @@ function Auth(): ReactElement {
     dispatch({ type: "SIGN_OUT" });
     history.push("/");
   };
-  const closeLoginModal = () => {
+  const closeLoginModal = useCallback(() => {
     setLoginModalIsOpen(false);
     history.push("/");
-  };
+  }, []);
 
-  const closeRegisterModal = () => {
+  const closeRegisterModal = useCallback(() => {
     setRegisterModalIsOpen(false);
     history.push("/");
-  };
+  }, []);
 
   return !user ? (
     <>
@@ -157,4 +157,4 @@ function Auth(): ReactElement {
     </div>
   );
 }
-export default Auth;
+export default React.memo(Auth);

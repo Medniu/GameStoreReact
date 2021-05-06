@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 import rockstarLogo from "../../assets/images/rockstar.png";
 import ubisoftLogo from "../../assets/images/ubisoft.png";
@@ -30,4 +30,4 @@ function Footer(): ReactElement {
   );
 }
 
-export default Footer;
+export default React.memo(Footer);

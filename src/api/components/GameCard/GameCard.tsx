@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AllState } from "@/types";
 import axios from "axios";
@@ -68,7 +68,7 @@ function GameCard({
         .delete(`/api/product/`, {
           params: { id },
         })
-        .then(({ data }) => {
+        .then(() => {
           setIsItemUpdate(!isItemUpdate);
         });
     }
@@ -179,4 +179,4 @@ function GameCard({
   );
 }
 
-export default GameCard;
+export default React.memo(GameCard);

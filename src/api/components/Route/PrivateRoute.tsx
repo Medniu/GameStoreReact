@@ -45,11 +45,11 @@ const PrivateRoute = ({ pageComponent, path }: Props): ReactElement => {
             </h2>
             <form className="contact-form">
               <div className="input-container">
-                Email:
+                <div>Email:</div>
                 <InputText value={email} setInputField={setEmail} name="email" type="email" placeholder="email" />
               </div>
               <div className="input-container">
-                Password:
+                <div>Password:</div>
                 <InputText
                   value={formPassword}
                   setInputField={setPassword}

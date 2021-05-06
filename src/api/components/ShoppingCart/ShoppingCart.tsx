@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import React, { ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AllState } from "@/types";
 import Container from "../Container/Container";
@@ -86,4 +86,4 @@ function ShoppingCart(): ReactElement {
   );
 }
 
-export default ShoppingCart;
+export default React.memo(ShoppingCart);

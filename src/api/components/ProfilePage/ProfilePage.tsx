@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { AllState, User } from "@/types";
@@ -146,4 +146,4 @@ function ProfilePage(): ReactElement {
   );
 }
 
-export default ProfilePage;
+export default React.memo(ProfilePage);

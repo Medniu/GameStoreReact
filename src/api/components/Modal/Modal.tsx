@@ -16,7 +16,7 @@ function Modal(props: ContainerProps): ReactElement | null {
   return ReactDOM.createPortal(
     <>
       {open && (
-        <div className="modal" onClick={() => onClose()}>
+        <div className="modal" onClick={() => onClose(false)}>
           <div className="modal_content" onClick={(e) => e.stopPropagation()}>
             {children}
           </div>
