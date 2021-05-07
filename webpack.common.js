@@ -16,6 +16,9 @@ const fs = require("fs");
 const path = require("path");
 const browserslist = require("browserslist");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const OptimizedImages = require("next-optimized-images");
+const CompressionPlugin = require("compression-webpack-plugin");
 
 const srcPath = path.resolve(__dirname, "./src/");
 const destPath = path.resolve(__dirname, "./build/"); // ('../Api/wwwroot')
@@ -73,6 +76,7 @@ module.exports = function (_env, argv) {
     optimization: {
       // config is taken from vue-cli
       splitChunks: {
+        chunks: "all",
         // for avoiding duplicated dependencies across modules
         minChunks: 1, // Minimum number of chunks that must share a module before splitting.
         cacheGroups: {
@@ -292,6 +296,13 @@ module.exports = function (_env, argv) {
         async: "obsolete",
       }),
       // optional: new BundleAnalyzerPlugin() // creates bundles-map in browser https://github.com/webpack-contrib/webpack-bundle-analyzer
+      new BundleAnalyzerPlugin(),
+      new CompressionPlugin({
+        algorithm: "gzip",
+        test: /\.ts$|\.css$|\.html$/,
+        threshold: 10240,
+        minRatio: 0.8,
+      }),
     ],
   };
 
