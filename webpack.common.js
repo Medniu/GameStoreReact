@@ -16,7 +16,7 @@ const fs = require("fs");
 const path = require("path");
 const browserslist = require("browserslist");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const OptimizedImages = require("next-optimized-images");
 const CompressionPlugin = require("compression-webpack-plugin");
 

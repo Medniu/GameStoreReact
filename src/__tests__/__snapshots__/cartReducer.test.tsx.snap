@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cartReducer tests It should change isSelected to true 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "category": "PC",
+      "id": 0,
+      "isSelected": false,
+      "name": "Witcher",
+      "price": 80,
+      "quantity": 2,
+    },
+    Object {
+      "category": "PC",
+      "id": 1,
+      "isSelected": true,
+      "name": "Witcher 2",
+      "price": 30,
+      "quantity": 1,
+    },
+  ],
+  "total": 190,
+}
+`;
+
+exports[`cartReducer tests It should change isSelected to true 2`] = `
+Object {
+  "items": Array [
+    Object {
+      "category": "PC",
+      "id": 0,
+      "isSelected": false,
+      "name": "Witcher",
+      "price": 80,
+      "quantity": 2,
+    },
+    Object {
+      "category": "PC",
+      "id": 1,
+      "isSelected": true,
+      "name": "Witcher 2",
+      "price": 30,
+      "quantity": 1,
+    },
+  ],
+  "total": 190,
+}
+`;
+
+exports[`cartReducer tests It should change isSelected to true 3`] = `
+Object {
+  "category": "PC",
+  "id": 1,
+  "isSelected": true,
+  "name": "Witcher 2",
+  "price": 30,
+  "quantity": 1,
+}
+`;
